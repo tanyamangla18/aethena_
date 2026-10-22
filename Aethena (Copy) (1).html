@@ -1,0 +1,1126 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Aethena (Copy)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0B1B3F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap">
+<style>
+/* Layout: phone-sized ride-hailing app on a quiet stage, presenter guide beside it on wide screens.
+   Map-first ride screens: a full-bleed map with a bottom sheet that scrolls over it. */
+:root{
+  --bg:#F4F6FA;--surface:#FFFFFF;--surface2:#EDF1F7;--surface3:#E3E9F2;
+  --ink:#0A1428;--ink2:#5B6880;--ink3:#8A96AB;--line:#E2E7EF;
+  --brand:#2563FF;--brand2:#1E4FD6;--brand-ink:#FFFFFF;--pale:#E6EEFF;--navy:#0B1B3F;
+  --ok:#0B8F5E;--ok-bg:#E2F6EC;--warn:#9A5B00;--warn-bg:#FFF2D6;--bad:#D92D45;--bad-bg:#FFE6EA;
+  --rec:#E5484D;
+  --m-land:#EEF2F7;--m-block:#E3E9F1;--m-road:#FFFFFF;--m-case:#D3DCE8;--m-minor:#F8FAFD;--m-park:#D8EEDF;--m-water:#C9E0F6;--m-label:#7C889D;--m-route:#2563FF;
+  --stage:#E7ECF4;
+  --sh1:0 1px 2px rgba(10,20,40,.06),0 6px 18px -8px rgba(10,20,40,.18);
+  --sh2:0 2px 6px rgba(10,20,40,.08),0 18px 40px -16px rgba(10,20,40,.35);
+  --shadow:0 40px 80px -30px rgba(10,20,40,.45);
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --fd:'Inter Tight','Inter',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#070C18;--surface:#0E1628;--surface2:#151F36;--surface3:#1C2843;
+  --ink:#EEF3FF;--ink2:#9AA8C4;--ink3:#6B7A98;--line:#1E2A45;
+  --brand:#4C82FF;--brand2:#3A6EF0;--brand-ink:#FFFFFF;--pale:#16264A;--navy:#0B1B3F;
+  --ok:#3DD39A;--ok-bg:#0F2F28;--warn:#F4C25B;--warn-bg:#33280F;--bad:#FF6B7F;--bad-bg:#3A1622;--rec:#FF5A5F;
+  --m-land:#0B1324;--m-block:#0F1A30;--m-road:#1D2B49;--m-case:#0A1222;--m-minor:#152240;--m-park:#0E2A22;--m-water:#0C2242;--m-label:#6F7FA0;--m-route:#5B8DFF;
+  --stage:#03070F;
+  --sh1:0 1px 2px rgba(0,0,0,.4),0 8px 20px -10px rgba(0,0,0,.7);
+  --sh2:0 2px 6px rgba(0,0,0,.45),0 20px 44px -16px rgba(0,0,0,.85);
+  --shadow:0 40px 80px -30px rgba(0,0,0,.9);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#070C18;--surface:#0E1628;--surface2:#151F36;--surface3:#1C2843;
+  --ink:#EEF3FF;--ink2:#9AA8C4;--ink3:#6B7A98;--line:#1E2A45;
+  --brand:#4C82FF;--brand2:#3A6EF0;--brand-ink:#FFFFFF;--pale:#16264A;--navy:#0B1B3F;
+  --ok:#3DD39A;--ok-bg:#0F2F28;--warn:#F4C25B;--warn-bg:#33280F;--bad:#FF6B7F;--bad-bg:#3A1622;--rec:#FF5A5F;
+  --m-land:#0B1324;--m-block:#0F1A30;--m-road:#1D2B49;--m-case:#0A1222;--m-minor:#152240;--m-park:#0E2A22;--m-water:#0C2242;--m-label:#6F7FA0;--m-route:#5B8DFF;
+  --stage:#03070F;
+  --sh1:0 1px 2px rgba(0,0,0,.4),0 8px 20px -10px rgba(0,0,0,.7);
+  --sh2:0 2px 6px rgba(0,0,0,.45),0 20px 44px -16px rgba(0,0,0,.85);
+  --shadow:0 40px 80px -30px rgba(0,0,0,.9);color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--stage);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  display:flex;justify-content:center;padding-block:0;padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2.5px solid var(--brand);outline-offset:2px}
+.stage{display:flex;gap:36px;align-items:center;justify-content:center;width:100%;height:100%}
+.guide{display:none}
+.phone{position:relative;display:flex;flex-direction:column;width:100%;max-width:440px;height:100%;background:var(--bg);overflow:hidden}
+@media (min-width:960px){
+  body{padding-block:22px;background:radial-gradient(800px 500px at 15% 0%,rgba(37,99,255,.12),transparent 60%),var(--stage)}
+  .guide{display:block;width:320px;align-self:center;max-height:100%;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--sh2)}
+  .phone{width:392px;height:min(100%,844px);border-radius:46px;border:10px solid #0A0F1C;box-shadow:var(--shadow),0 0 0 1px rgba(255,255,255,.06)}
+}
+.guide h2{font-family:var(--fd);font-size:19px;margin:0 0 4px;letter-spacing:-.02em}
+.guide p,.guide li{color:var(--ink2);font-size:13px}
+.guide ol{padding-left:18px;margin:12px 0;display:grid;gap:8px}
+.guide b{color:var(--ink)}
+.guide .btn{margin-top:8px}
+.guide .gtag{display:inline-block;font-size:11px;font-weight:700;color:var(--brand);background:var(--pale);border-radius:99px;padding:3px 9px;margin-bottom:10px}
+
+/* app chrome */
+#app{position:relative}
+header.top{display:flex;align-items:center;gap:10px;padding:14px 16px 8px;position:relative;z-index:6}
+header.top.float{position:absolute;left:0;right:0;top:0;padding:14px 14px 0;pointer-events:none}
+header.top.float>*{pointer-events:auto}
+header.top.float.solid{background:var(--bg);padding-bottom:10px;box-shadow:0 1px 0 var(--line);pointer-events:auto}
+header.top.float.solid .iconbtn{box-shadow:none}
+.top h1{font-family:var(--fd);font-size:18px;margin:0;font-weight:700;flex:1;letter-spacing:-.02em;text-wrap:balance}
+.iconbtn{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;box-shadow:var(--sh1);color:var(--ink)}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.screen{flex:1;overflow:auto;padding:4px 16px 20px;scroll-behavior:smooth;overscroll-behavior:contain}
+.screen.mf{padding:0}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-.02em}
+.logo i{width:30px;height:30px;border-radius:9px;background:linear-gradient(145deg,#0B1B3F,#2563FF);display:grid;place-items:center;color:#fff;box-shadow:0 6px 14px -6px rgba(37,99,255,.8)}
+.logo i .ic{width:17px;height:17px}
+.pillbtn{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:6px 12px 6px 6px;box-shadow:var(--sh1)}
+
+/* map-first layout */
+.mapstage{position:sticky;top:0;height:clamp(250px,47vh,420px);z-index:0;overflow:hidden;background:var(--m-land)}
+.mapstage.short{height:clamp(220px,36vh,330px)}
+.mapstage .map{width:100%;height:100%;border:0;border-radius:0;aspect-ratio:auto;box-shadow:none}
+.mapstage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,.06));pointer-events:none}
+.mapfloat{position:absolute;left:14px;right:14px;bottom:42px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;z-index:2;pointer-events:none}
+.mapfloat>*{pointer-events:auto}
+.sheetbody{position:relative;z-index:2;margin-top:-26px;background:var(--bg);border-radius:26px 26px 0 0;padding:10px 16px 24px;min-height:62%;box-shadow:0 -10px 30px -12px rgba(10,20,40,.25)}
+.sheetbody::before{content:"";display:block;width:38px;height:5px;border-radius:9px;background:var(--surface3);margin:0 auto 12px}
+.floatchip{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:700;box-shadow:var(--sh1)}
+.floatchip .d{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px var(--ok-bg)}
+.floatchip.warn .d{background:var(--warn);box-shadow:0 0 0 3px var(--warn-bg)}
+.floatchip.bad .d{background:var(--bad);box-shadow:0 0 0 3px var(--bad-bg)}
+
+/* type and text */
+h2.hd{font-family:var(--fd);font-size:24px;font-weight:800;letter-spacing:-.03em;margin:0;line-height:1.15;text-wrap:balance}
+h3{font-family:var(--fd);font-size:16px;margin:0;font-weight:700;letter-spacing:-.015em}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:22px 2px 10px}
+.sec h3{font-size:17px}
+.sec a,.sec button.lnk{font-size:13px;font-weight:700;color:var(--brand)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.mut{color:var(--ink2)}.sm{font-size:12.5px}.xs{font-size:11.5px}.num{font-variant-numeric:tabular-nums}
+.big{font-family:var(--fd);font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.row{display:flex;align-items:center;gap:10px}.row.sp{justify-content:space-between}.row.top{align-items:flex-start}
+.col{display:grid;gap:8px}
+.grow{flex:1;min-width:0}
+
+/* where-to search */
+.search{display:flex;align-items:center;gap:12px;width:100%;background:var(--surface2);border-radius:16px;padding:15px 14px;text-align:left;font-size:17px;font-weight:700;color:var(--ink);font-family:var(--fd);letter-spacing:-.01em}
+.search .ic{width:22px;height:22px}
+.search .when{margin-left:auto;display:flex;align-items:center;gap:4px;background:var(--surface);border-radius:99px;padding:6px 11px;font-size:12.5px;font-weight:700;font-family:var(--f);box-shadow:var(--sh1)}
+.place{display:flex;align-items:center;gap:13px;width:100%;text-align:left;padding:11px 2px}
+.place+.place{border-top:1px solid var(--line)}
+.place .pi{width:38px;height:38px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;color:var(--ink2);flex:none}
+.place b{font-weight:700;font-size:14.5px}
+.svc{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.svc button{display:grid;justify-items:center;gap:6px;padding:10px 2px 8px;border-radius:16px;background:var(--surface2);font-size:12px;font-weight:700}
+.svc button .vi{width:42px;height:30px;display:grid;place-items:center;color:var(--brand)}
+.svc button .vi .ic{width:30px;height:30px;stroke-width:1.6}
+.svc button.on{background:var(--pale);box-shadow:inset 0 0 0 1.5px var(--brand)}
+.promo{position:relative;overflow:hidden;display:flex;gap:14px;align-items:center;border-radius:20px;padding:16px;background:linear-gradient(120deg,#0B1B3F,#1C3F9E 70%,#2563FF);color:#fff;text-align:left;width:100%}
+.promo::after{content:"";position:absolute;right:-40px;top:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.25),transparent 70%)}
+.promo b{font-family:var(--fd);font-size:16px;letter-spacing:-.01em}
+.promo small{opacity:.85;font-size:12.5px;display:block;margin-top:2px}
+.promo .pico{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none}
+
+/* category cards */
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:3px;min-height:128px;padding:14px;border-radius:20px;text-align:left;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh1)}
+.cat .cico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pale);color:var(--brand);margin-bottom:auto}
+.cat b{font-family:var(--fd);font-size:16px;font-weight:700;letter-spacing:-.015em;margin-top:12px}
+.cat small{font-size:12px;color:var(--ink2);line-height:1.35}
+.cat.r{background:var(--navy);border-color:transparent;color:#fff}
+.cat.r .cico{background:rgba(255,255,255,.12);color:#fff}
+.cat.r small{color:rgba(255,255,255,.75)}
+
+/* cards, lists, tiles */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:12px;box-shadow:var(--sh1)}
+.card.flat{background:var(--surface2);border-color:transparent;box-shadow:none}
+.card.tight{padding:4px 14px}
+.item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:left;display:grid;gap:6px;align-content:start;min-width:0;box-shadow:var(--sh1)}
+.tile .ib{width:38px;height:38px;border-radius:11px;background:var(--pale);color:var(--brand);display:grid;place-items:center;margin-bottom:4px}
+.tile b{font-weight:700;font-size:14px}
+.tile small{color:var(--ink2);font-size:12px}
+.tile.wide{grid-column:1/-1;grid-template-columns:auto 1fr auto;align-items:center}
+.tile.wide .ib{margin:0}
+.tile.ev .ib{background:var(--bad-bg);color:var(--rec)}
+.prow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.plist{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:12px;box-shadow:var(--sh1)}
+.plist .prow:last-child{border-bottom:0}
+.prow .ib{width:36px;height:36px;border-radius:11px;background:var(--surface2);color:var(--ink);display:grid;place-items:center;flex:none}
+.prow b{font-weight:700}
+.chev{transform:rotate(180deg);color:var(--ink3);width:18px;height:18px}
+.dpbtn{color:inherit;text-align:left;flex:1;min-width:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:14px;font-weight:700;background:var(--brand);color:var(--brand-ink);width:100%;font-size:15px;letter-spacing:-.005em;transition:transform .12s ease,filter .2s}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:scale(.98)}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.soft{background:var(--surface2);color:var(--ink)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn.sm{padding:9px 13px;font-size:13px;width:auto;border-radius:11px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btnrow{display:flex;gap:8px}.btnrow .btn{flex:1}
+.act4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.act4 button{display:grid;justify-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink)}
+.act4 button i{width:48px;height:48px;border-radius:50%;background:var(--surface2);display:grid;place-items:center}
+.act4 button.safe i{background:var(--pale);color:var(--brand)}
+.act4 button.rec i{background:var(--bad-bg);color:var(--rec)}
+
+/* chips, banners, misc */
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;background:var(--surface2);color:var(--ink);font-size:11.5px;font-weight:700;white-space:nowrap}
+.chip .ic{width:13px;height:13px}
+.chip.blue{background:var(--pale);color:var(--brand)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.sim{background:transparent;border:1px dashed var(--ink3);color:var(--ink2);font-weight:600}
+.banner{border-radius:16px;padding:12px 13px;font-size:13px;display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left}
+.banner .ic{margin-top:1px}
+.banner.ok{background:var(--ok-bg);color:var(--ok)}.banner.warn{background:var(--warn-bg);color:var(--warn)}.banner.bad{background:var(--bad-bg);color:var(--bad)}.banner.info{background:var(--pale);color:var(--brand)}
+.banner b{display:block;font-size:14px;font-weight:700;letter-spacing:-.01em;margin-bottom:1px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#1E4FD6,#5B8DFF);color:#fff;display:grid;place-items:center;font-weight:800;font-family:var(--fd);flex:none;font-size:14px}
+.avatar.big{width:62px;height:62px;font-size:21px}
+.plate{display:inline-block;font-family:var(--fd);font-weight:800;letter-spacing:.06em;background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:13.5px}
+.field{display:grid;gap:6px;margin-top:12px}
+.field label{font-size:12px;font-weight:700;color:var(--ink2)}
+input[type=text],input[type=tel],select,textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--line);background:var(--surface);min-width:0;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--pale)}
+textarea{resize:vertical;min-height:70px}
+.switch{position:relative;width:46px;height:28px;border-radius:99px;background:var(--surface3);flex:none;transition:.2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.switch.on{background:var(--brand)}.switch.on::after{left:21px}
+.switch.rec.on{background:var(--rec)}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface2);border-radius:13px;padding:3px;gap:3px;margin-top:14px}
+.seg button{padding:9px 6px;border-radius:10px;font-weight:700;color:var(--ink2);font-size:13.5px}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh1)}
+.seg.s3{grid-template-columns:repeat(3,1fr)}.seg.s4{grid-template-columns:repeat(4,1fr)}
+.seg.small button{padding:8px 4px;font-size:12.5px}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 8px;text-align:center}
+.stat b{display:block;font-family:var(--fd);font-size:17px;font-weight:800;letter-spacing:-.02em}.stat span{font-size:11px;color:var(--ink2)}
+.log{max-height:180px;overflow:auto;display:grid;gap:7px;font-size:12px}
+.log div{display:grid;grid-template-columns:42px 1fr;gap:8px}.log time{color:var(--ink3);font-variant-numeric:tabular-nums}
+.log .bad{color:var(--bad)}.log .warn{color:var(--warn)}.log .ok{color:var(--ok)}
+details.card summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.card summary::-webkit-details-marker{display:none}
+.stepper{display:flex;align-items:center;gap:8px}.stepper button{width:32px;height:32px;border-radius:10px;background:var(--surface2);font-weight:800}
+.stepper span{min-width:40px;text-align:center;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:12px}
+.radio{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);width:100%;text-align:left}
+.radio.on{border-color:var(--brand);box-shadow:0 0 0 3px var(--pale)}
+.radio .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--surface3);flex:none}.radio.on .dot{border:6px solid var(--brand)}
+.stars{display:flex;gap:6px;justify-content:center;margin:10px 0}
+.stars button{color:var(--surface3);padding:2px}.stars button.on{color:#F5B301}.stars .ic{width:36px;height:36px;fill:currentColor;stroke:none}
+.qr{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;width:132px;margin:8px auto;padding:8px;background:#fff;border-radius:10px}.qr i{aspect-ratio:1;background:#111;border-radius:1px}.qr i.w{background:#fff}
+.bars{display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:8px}.bars div{flex:1;display:grid;gap:4px;align-items:end;justify-items:center;height:100%;font-size:10px;color:var(--ink2)}
+.bars i{display:block;width:100%;background:var(--surface3);border-radius:6px 6px 3px 3px}.bars i.today{background:var(--brand)}
+.legend{display:flex;gap:14px;margin-top:10px;font-size:12px;font-weight:600;color:var(--ink2);flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:6px}
+.ld{width:12px;height:12px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ld.you{background:#2563FF}.ld.safe{background:#0B8F5E}.ld.pol{background:#0B1B3F}
+
+/* maps */
+.map{width:100%;display:block;border-radius:20px;border:1px solid var(--line);aspect-ratio:36/30;background:var(--m-land)}
+.mapwrap{position:relative;margin-top:6px}
+.mapwrap .tag{position:absolute;left:10px;top:10px}
+.pulse{animation:pulse 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+
+/* ride sheets */
+.trip{display:grid;grid-template-columns:22px 1fr;gap:0 10px;align-items:center}
+.trip .dotA{width:10px;height:10px;border-radius:50%;background:var(--ink);justify-self:center}
+.trip .dotB{width:10px;height:10px;border-radius:2px;background:var(--brand);justify-self:center}
+.trip .ln{width:2px;height:20px;background:var(--surface3);justify-self:center}
+.tin{display:flex;align-items:center;gap:8px;background:var(--surface2);border-radius:12px;padding:0 6px 0 12px}
+.tin input{border:0;background:transparent;padding:12px 0;font-weight:600;box-shadow:none}
+.tin input:focus{box-shadow:none}
+.vrow{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:12px;border-radius:16px;border:1.5px solid transparent}
+.vrow:hover{background:var(--surface2)}
+.vrow .vi{width:62px;height:44px;display:grid;place-items:center;color:var(--brand);flex:none}
+.vrow .vi .ic{width:40px;height:40px;stroke-width:1.5}
+.vrow b{font-size:15.5px}
+.vrow .pr{text-align:right;font-family:var(--fd);font-weight:800;font-size:16.5px;letter-spacing:-.01em}
+.dcard{display:flex;gap:12px;align-items:center}
+.etaBig{font-family:var(--fd);font-weight:800;font-size:22px;letter-spacing:-.03em}
+.progress{height:4px;border-radius:4px;background:var(--surface3);overflow:hidden;margin-top:12px}
+.progress i{display:block;height:100%;background:var(--brand);border-radius:4px;transition:width .3s}
+.otp{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
+.otp span{width:46px;height:54px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-family:var(--fd);font-size:24px;font-weight:800}
+.safeRow{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--surface);border:1px solid var(--line);margin-top:10px}
+.safeRow .ib{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--ok-bg);color:var(--ok)}
+.safeRow.ev .ib{background:var(--bad-bg);color:var(--rec)}
+
+/* evidence mode */
+.evhero{border-radius:24px;padding:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh1);text-align:center;margin-top:6px}
+.recbtn{position:relative;width:118px;height:118px;border-radius:50%;margin:8px auto 12px;display:grid;place-items:center;background:var(--surface2);border:1px solid var(--line)}
+.recbtn i{width:58px;height:58px;border-radius:50%;background:var(--rec);transition:all .25s;box-shadow:0 8px 20px -6px rgba(229,72,77,.7)}
+.recbtn.on i{width:40px;height:40px;border-radius:11px}
+.recbtn.on::before{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(229,72,77,.35);animation:evring 2.4s ease-out infinite}
+@keyframes evring{0%{transform:scale(.92);opacity:1}100%{transform:scale(1.18);opacity:0}}
+.evstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.evstat div{background:var(--surface2);border-radius:13px;padding:9px 6px}
+.evstat b{display:block;font-family:var(--fd);font-weight:800;font-size:16px;letter-spacing:-.02em}
+.evstat span{font-size:11px;color:var(--ink2)}
+.wave{display:flex;gap:3px;align-items:center;justify-content:center;height:26px;margin-top:6px}
+.wave i{width:3px;border-radius:3px;background:var(--rec);opacity:.75;animation:wv 1s ease-in-out infinite}
+.wave i:nth-child(odd){animation-delay:.2s}.wave i:nth-child(3n){animation-delay:.45s}.wave i:nth-child(4n){animation-delay:.7s}
+@keyframes wv{0%,100%{height:5px}50%{height:22px}}
+.wave.off i{animation:none;height:4px;opacity:.3;background:var(--ink3)}
+.sync{display:flex;align-items:center;gap:8px;justify-content:center;font-size:12.5px;font-weight:600;color:var(--ok);margin-top:12px}
+.sync.q{color:var(--warn)}
+.evpill{position:absolute;top:66px;left:50%;transform:translateX(-50%);z-index:35;display:flex;align-items:center;gap:7px;background:rgba(10,20,40,.88);color:#fff;border-radius:99px;padding:6px 12px 6px 10px;font-size:12px;font-weight:700;box-shadow:0 8px 20px -8px rgba(0,0,0,.6);font-variant-numeric:tabular-nums;border:1px solid rgba(255,255,255,.16)}
+.evpill .rd{width:8px;height:8px;border-radius:50%;background:var(--rec);animation:blink 1.4s infinite}
+.evpill.min{padding:5px 9px;gap:6px;opacity:.9;top:22px;left:auto;right:64px;transform:none}
+@keyframes blink{50%{opacity:.25}}
+@media (max-width:959px){.evpill{position:fixed;top:calc(66px + env(safe-area-inset-top,0px))}.evpill.min{top:calc(22px + env(safe-area-inset-top,0px))}}
+.how{display:grid;gap:12px;margin-top:4px}
+.how div{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.how span.n{width:28px;height:28px;border-radius:50%;background:var(--pale);color:var(--brand);display:grid;place-items:center;font-weight:800;font-size:12.5px}
+
+/* bottom navigation */
+nav.bar{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;position:relative;z-index:5;padding:6px 6px calc(8px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
+nav.bar .nv{display:grid;justify-items:center;gap:2px;padding:6px 0 2px;font-size:11px;font-weight:600;color:var(--ink3);min-width:0}
+nav.bar .nv .ic{width:23px;height:23px}
+nav.bar .nv.on{color:var(--ink)}
+nav.bar .nv.on .ic{stroke-width:2.3}
+nav.bar .nvc{display:grid;justify-items:center}
+nav.bar .sos{width:54px;height:54px;margin:-20px 0 2px;border-radius:50%;padding:0;display:grid;place-items:center;font-weight:800;font-size:13px;letter-spacing:.05em;color:#fff;border:4px solid var(--surface);background:var(--bad);box-shadow:0 8px 18px -6px rgba(217,45,69,.65)}
+nav.bar .sos:active{transform:scale(.94)}
+
+/* overlays */
+.overlay{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column}
+@media (max-width:959px){.overlay{position:fixed;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}}
+.call{background:radial-gradient(500px 360px at 50% 25%,rgba(76,130,255,.35),transparent 70%),linear-gradient(180deg,#0A1428,#10224A);color:#fff;align-items:center;justify-content:space-between;padding:64px 24px 52px}
+.call .nm{font-family:var(--fd);font-size:34px;font-weight:700;text-align:center;letter-spacing:-.02em}
+.call .sub{opacity:.8;margin-top:4px;text-align:center}
+.call .av{width:108px;height:108px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-family:var(--fd);font-size:42px;font-weight:700;margin:0 auto 22px;box-shadow:0 0 0 16px rgba(255,255,255,.04),0 0 0 34px rgba(255,255,255,.025)}
+.call.video{background:radial-gradient(circle at 50% 30%,#2A4E9E,#0A1428 70%)}
+.call.safe{background:radial-gradient(520px 420px at 50% 30%,rgba(255,90,95,.45),transparent 68%),linear-gradient(180deg,#140A12,#2A0E18)}
+.call.safe .av{background:linear-gradient(145deg,#FF7A88,#D92D45);border:0;animation:sosglow 1.6s ease-out infinite}
+@keyframes sosglow{0%{box-shadow:0 0 0 0 rgba(255,90,95,.6)}100%{box-shadow:0 0 0 40px rgba(255,90,95,0)}}
+.call .acts{display:flex;gap:72px}
+.call .acts button{display:grid;justify-items:center;gap:8px;color:#fff;font-weight:600;font-size:13px}
+.call .acts i{width:70px;height:70px;border-radius:50%;display:grid;place-items:center}
+.call .acts .no i{background:#E5484D}.call .acts .yes i{background:#22B573}
+.call.safe .acts .yes i{background:#fff;color:#0A1428}
+.ring-anim .yes i{animation:shake 1s infinite}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}}
+.eq{display:flex;gap:4px;align-items:flex-end;height:30px;justify-content:center}.eq i{width:5px;background:#9FC4FF;border-radius:3px;animation:eq .9s infinite ease-in-out}
+.eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}.eq i:nth-child(4){animation-delay:.45s}.eq i:nth-child(5){animation-delay:.6s}
+@keyframes eq{0%,100%{height:6px}50%{height:28px}}
+.sheetwrap{align-items:stretch;justify-content:flex-end;background:rgba(5,10,22,.5)}
+.sheet{background:var(--bg);border-radius:26px 26px 0 0;padding:12px 16px calc(20px + env(safe-area-inset-bottom,0px));max-height:90%;overflow:auto;box-shadow:0 -20px 50px -10px rgba(0,0,0,.4);animation:up .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.sheet .grab{width:38px;height:5px;border-radius:9px;background:var(--surface3);margin:0 auto 14px}
+.notif{position:absolute;left:10px;right:10px;top:10px;z-index:45;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:var(--sh2);animation:drop .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes drop{from{transform:translateY(-20px);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:959px){.notif{position:fixed;top:calc(10px + env(safe-area-inset-top,0px))}}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:13px;font-weight:600;z-index:60;max-width:88%;text-align:center;box-shadow:var(--sh2)}
+@media (max-width:959px){.toast{position:fixed;bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
+
+/* onboarding */
+.ob{display:flex;flex-direction:column;min-height:100%;justify-content:space-between;gap:16px;padding-top:6px}
+.obart{border-radius:28px;overflow:hidden;background:linear-gradient(160deg,#0B1B3F,#173A8F 60%,#2563FF);position:relative;aspect-ratio:1/1.02}
+.obart svg{width:100%;height:100%;display:block}
+.obtxt h2{font-family:var(--fd);font-size:28px;font-weight:800;letter-spacing:-.03em;margin:4px 0 6px;line-height:1.1;text-wrap:balance}
+.obtxt p{margin:0;color:var(--ink2);font-size:15px}
+.dots{display:flex;gap:6px}.dots i{width:7px;height:7px;border-radius:9px;background:var(--surface3)}.dots i.on{width:22px;background:var(--ink)}
+
+/* profile */
+.pcard{display:flex;gap:14px;align-items:center;margin-top:4px;padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh1)}
+.pname{font-family:var(--fd);font-size:19px;font-weight:800;letter-spacing:-.02em}
+.dhero{border-radius:22px;padding:16px;background:var(--navy);color:#fff;margin-top:4px}
+.dhero .avatar{background:rgba(255,255,255,.15)}
+.dhero .chev{color:#fff;opacity:.7}
+
+/* entry animation */
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.screen.enter>*,.screen.enter .sheetbody>*{animation:rise .32s cubic-bezier(.2,.7,.2,1) both}
+.screen.enter .mapstage{animation:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<div class="stage">
+  <aside class="guide" aria-label="Presenter guide">
+    <span class="gtag">Presenter guide</span>
+    <h2>Aethena prototype</h2>
+    <p>A ride-hailing app with safety built in. Everything marked simulated is a demo. No real calls, payments, recordings or alerts are made.</p>
+    <ol>
+      <li><b>Home</b>: tap <b>Where to?</b> or a saved place. Rides and Generalised (safety tools) sit under Explore.</li>
+      <li><b>Book</b>: pick a ride, confirm, watch the driver arrive, share the PIN and <b>Start ride</b>.</li>
+      <li><b>Detour test</b>: in Demo controls press <b>Traffic diversion</b>. No alarm is raised.</li>
+      <li><b>Real deviation</b>: press <b>Unexplained deviation</b>. Grace period, quiet check-in, the Are You Safe? call, then contacts are alerted and Evidence mode starts.</li>
+      <li><b>Phone off</b> or <b>Battery 14%</b> show escalation without a reply. Evidence queues offline and syncs on <b>Reconnect</b>.</li>
+      <li><b>Evidence mode</b>: Safety tab, or the record switch during a ride. Start, watch it back up, stop, then share from the vault.</li>
+      <li><b>Fake call</b>: Safety, Fake calls, 3 s, Schedule call.</li>
+      <li><b>Pay and review</b>, then Account, Driver dashboard for reconciliation.</li>
+    </ol>
+    <button class="btn soft" data-a="theme">Switch light or dark</button>
+    <button class="btn ghost" style="margin-top:8px" data-a="resetDemo">Reset demo</button>
+  </aside>
+  <div class="phone" id="phone">
+    <div id="app" style="display:flex;flex-direction:column;flex:1;min-height:0"></div>
+    <div id="layer"></div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var rupee=function(n){return '₹'+Math.round(n).toLocaleString('en-IN')};
+
+/* ---------- icons ---------- */
+var IC={
+ shield:'<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
+ pin:'<path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+ phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>',
+ video:'<rect x="3" y="6" width="12" height="12" rx="2"/><path d="M15 10l6-3v10l-6-3z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 5a3.5 3.5 0 010 7M18.5 14.5c1.7.8 3 2.6 3 5.5"/>',
+ car:'<path d="M5 16v-5l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><circle cx="7.5" cy="17.5" r=".8"/><circle cx="16.5" cy="17.5" r=".8"/>',
+ bike:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h4l4 8M10 8H8M14 8l-3 8"/>',
+ auto:'<path d="M3 17V9l4-4h9l3 5v7"/><path d="M3 17h16"/><circle cx="7" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="M8 9h8"/>',
+ suv:'<path d="M3 16v-5l2-4h11l4 4v5"/><path d="M3 16h18"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/>',
+ star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ back:'<path d="M15 5l-7 7 7 7"/>',
+ battery:'<rect x="3" y="8" width="16" height="9" rx="2"/><path d="M21 11v3"/>',
+ wifioff:'<path d="M3 3l18 18"/><path d="M5 10a10 10 0 013.5-2M2 7a14 14 0 018-3.5M9 14a5 5 0 016 0M12 18h.01"/>',
+ bell:'<path d="M6 17V11a6 6 0 1112 0v6l1.5 2h-15z"/><path d="M10 21h4"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+ home:'<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>',
+ police:'<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M12 8l1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>',
+ lamp:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0012 3z"/>',
+ route:'<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 000-6H9a3 3 0 010-6h6.5"/>',
+ wallet:'<path d="M4 7a2 2 0 012-2h11v4"/><rect x="4" y="7" width="17" height="12" rx="2.5"/><circle cx="16.5" cy="13" r="1"/>',
+ flag:'<path d="M5 21V4M5 5h12l-2 4 2 4H5"/>',
+ copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/>',
+ upload:'<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',
+ mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',
+ trash:'<path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/>',
+ swap:'<path d="M7 4L4 7l3 3M4 7h13M17 20l3-3-3-3M20 17H7"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ mute:'<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l4 6M21 9l-4 6"/>',
+ spk:'<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/>',
+ grid:'<circle cx="6" cy="6" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="18" cy="6" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="6" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="18" cy="18" r="1"/>',
+ menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+ nav:'<path d="M12 3l7 17-7-4-7 4z"/>'
+};
+var ic=function(n,c){return '<svg class="ic '+(c||'')+'" viewBox="0 0 24 24" aria-hidden="true">'+(IC[n]||'')+'</svg>'};
+
+/* ---------- data ---------- */
+var PLACES=[
+ {id:'cp',name:'Connaught Place',x:170,y:140},{id:'ig',name:'India Gate',x:255,y:215},
+ {id:'ns',name:'Nehru Place',x:300,y:330},{id:'sn',name:'Sarojini Nagar',x:120,y:300},
+ {id:'ap',name:'IGI Airport T3',x:55,y:350},{id:'kb',name:'Karol Bagh',x:75,y:150},
+ {id:'hk',name:'Hauz Khas',x:195,y:372},{id:'n62',name:'Noida Sector 62',x:320,y:70}
+];
+var SPOTS=[
+ {n:'Metro station concourse',t:'Staffed, CCTV',d:'180 m',x:150,y:170,open:'Open until 11:30 pm'},
+ {n:'24x7 pharmacy and petrol pump',t:'Staffed, floodlit',d:'320 m',x:230,y:190,open:'Open 24 hours'},
+ {n:'City hospital emergency gate',t:'Guarded, floodlit',d:'450 m',x:105,y:230,open:'Open 24 hours'},
+ {n:'Main market arcade',t:'Busy, street lights',d:'520 m',x:200,y:120,open:'Open until 10 pm'}
+];
+var POLICE=[
+ {n:'Nearest police station',a:'Sample location A',d:'0.8 km',ph:'+91 11 5550 0142',x:130,y:200},
+ {n:'Women help desk (sample)',a:'Sample location B',d:'1.4 km',ph:'+91 11 5550 0177',x:240,y:150},
+ {n:'Traffic police post',a:'Sample location C',d:'2.1 km',ph:'+91 11 5550 0190',x:90,y:290}
+];
+var VEH=[
+ {id:'bike',label:'Bike',seats:1,base:20,km:7,icon:'bike',eta:3,model:'Hero Splendor',reg:'DL 3S CQ 4821',drv:'Aman S.',rate:4.8,trips:2140},
+ {id:'auto',label:'Auto',seats:3,base:30,km:11,icon:'auto',eta:4,model:'CNG Auto',reg:'DL 1R AP 5530',drv:'Rajesh K.',rate:4.7,trips:3820},
+ {id:'mini',label:'Taxi Mini',seats:4,base:45,km:13,icon:'car',eta:5,model:'Maruti WagonR',reg:'DL 2C AH 7714',drv:'Priya M.',rate:4.9,trips:1260},
+ {id:'sedan',label:'Sedan',seats:4,base:60,km:16,icon:'car',eta:6,model:'Honda City',reg:'DL 9C BQ 3092',drv:'Imran A.',rate:4.8,trips:2975},
+ {id:'suv',label:'SUV',seats:6,base:90,km:22,icon:'suv',eta:8,model:'Toyota Innova',reg:'DL 4C AU 8806',drv:'Vikram T.',rate:4.9,trips:1810}
+];
+var RINGS={classic:'Classic ring',chime:'Soft chime',pulse:'Pulse'};
+var PX_KM=.025; /* 1 map px = 25 m */
+var PX_MIN=.0682; /* minutes per px at 22 km/h */
+
+/* ---------- state ---------- */
+function loadContacts(){try{var r=localStorage.getItem('aethena.contacts');if(r)return JSON.parse(r)}catch(e){}return[{n:'Mom',p:'+91 98100 00001',r:'Family',on:true},{n:'Riya',p:'+91 98100 00002',r:'Friend',on:true}]}
+function saveContacts(){try{localStorage.setItem('aethena.contacts',JSON.stringify(S.contacts))}catch(e){}}
+var S={
+ screen:'onboard',obStep:0,tab:'gen',contacts:loadContacts(),
+ fake:{name:'Riya',kind:'audio',delay:3,ring:'classic',script:"Hey, where are you? I'm outside waiting for you. Call me when you're close.",voiceUrl:null,voiceName:'',timer:null,left:0},
+ cfg:{grace:5,checkin:6,call:8,thr:26},
+ book:{from:'Karol Bagh',to:'Hauz Khas'},sharing:false,pickVeh:null,
+ ride:null,review:{stars:0,tags:[],text:'',method:'upi'},driverTab:'req',online:true,
+ ledger:[
+  {id:'TX-2041',route:'Karol Bagh to Hauz Khas',fare:184,method:'UPI',st:'received',when:'Today 08:10'},
+  {id:'TX-2042',route:'Nehru Place to Sarojini Nagar',fare:96,method:'Cash',st:'received',when:'Today 09:05'},
+  {id:'TX-2043',route:'India Gate to Connaught Place',fare:142,method:'Cash',st:'pending',when:'Today 09:40'},
+  {id:'TX-2044',route:'IGI Airport T3 to Karol Bagh',fare:310,method:'UPI',st:'flag',when:'Today 10:12',note:'Passenger confirmed UPI. No matching credit from provider.'}
+ ],
+ driverSeen:{auto:null},reqs:[
+  {id:1,from:'Sarojini Nagar',to:'Nehru Place',fare:148,km:6.1,eta:3},
+  {id:2,from:'Connaught Place',to:'India Gate',fare:96,km:3.4,eta:5},
+  {id:3,from:'Karol Bagh',to:'Noida Sector 62',fare:402,km:18.6,eta:7}],
+ assigned:[]
+};
+S.ev={on:false,secs:0,mb:0,chunks:0,queued:0,pts:0,lastUp:0,audio:true,video:true,loc:true,discreet:true,auto:true,ctx:'',timer:null,vault:[{ctx:'Walk home · Hauz Khas',when:'Yesterday 10:41 pm',dur:'06:12',mb:48.2,st:'Private'}]};S.hist=[];
+var tickTimer=null,ringTimer=null,sosTimer=null,toastT=null,ac=null;
+
+/* ---------- audio ---------- */
+function audio(){try{if(!ac){var C=window.AudioContext||window.webkitAudioContext;if(C)ac=new C()}if(ac&&ac.state==='suspended')ac.resume()}catch(e){}return ac}
+function tone(f,t0,d,type,v){var a=audio();if(!a)return;try{var o=a.createOscillator(),g=a.createGain(),t=a.currentTime+t0;o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v||.14,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.05)}catch(e){}}
+var RING={
+ classic:function(){[0,.4].forEach(function(t){tone(880,t,.3);tone(660,t,.3)})},
+ chime:function(){[784,988,1175].forEach(function(f,i){tone(f,i*.2,.7,'triangle')})},
+ pulse:function(){[0,.22,.44].forEach(function(t){tone(520,t,.14,'square',.06)})},
+ urgent:function(){[0,.25,.5,.75].forEach(function(t){tone(990,t,.18,'square',.07);tone(740,t+.12,.12,'square',.05)})}
+};
+function startRing(kind,vib){stopRing();var f=RING[kind]||RING.classic;f();ringTimer=setInterval(f,kind==='urgent'?1400:2400);buzz(vib)}
+function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p||[400,200,400])}catch(e){}}
+function stopRing(){clearInterval(ringTimer);ringTimer=null;try{if(navigator.vibrate)navigator.vibrate(0)}catch(e){}}
+
+/* ---------- geometry ---------- */
+function polyLen(p){var l=0;for(var i=0;i<p.length-1;i++)l+=Math.hypot(p[i+1].x-p[i].x,p[i+1].y-p[i].y);return l}
+function pointAt(p,s){var acc=0;for(var i=0;i<p.length-1;i++){var a=p[i],b=p[i+1],l=Math.hypot(b.x-a.x,b.y-a.y);if(s<=acc+l||i===p.length-2){var t=l?Math.min(1,Math.max(0,(s-acc)/l)):0;return{x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t}}acc+=l}return p[0]}
+function nearest(pt,p){var best={d:1e9,x:0,y:0,i:0,s:0},acc=0;for(var i=0;i<p.length-1;i++){var a=p[i],b=p[i+1],vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy,t=l2?((pt.x-a.x)*vx+(pt.y-a.y)*vy)/l2:0;t=Math.max(0,Math.min(1,t));var x=a.x+t*vx,y=a.y+t*vy,d=Math.hypot(pt.x-x,pt.y-y);if(d<best.d)best={d:d,x:x,y:y,i:i,s:acc+t*Math.sqrt(l2)};acc+=Math.sqrt(l2)}return best}
+function clampPt(p){return{x:Math.max(18,Math.min(342,p.x)),y:Math.max(18,Math.min(422,p.y))}}
+function mkRoute(A,B){var r=[{x:A.x,y:A.y},{x:B.x,y:A.y},{x:B.x,y:B.y}];var alt=[{x:A.x,y:A.y},{x:A.x,y:B.y},{x:B.x,y:B.y}];
+ if(Math.abs(A.x-B.x)<35||Math.abs(A.y-B.y)<35){var o=A.x<180?45:-45;alt=[{x:A.x,y:A.y},{x:A.x+o,y:(A.y+B.y)/2},{x:B.x+o,y:(A.y+B.y)/2+(B.y>A.y?20:-20)},{x:B.x,y:B.y}]}
+ return{route:r,alt:alt}}
+function vbFor(pts,pad,ar){var xs=pts.map(function(p){return p.x}),ys=pts.map(function(p){return p.y});var x0=Math.min.apply(0,xs)-pad,x1=Math.max.apply(0,xs)+pad,y0=Math.min.apply(0,ys)-pad,y1=Math.max.apply(0,ys)+pad;var w=x1-x0,h=y1-y0;ar=ar||36/30;if(w/h<ar){var nw=h*ar;x0-=(nw-w)/2;w=nw}else{var nh=w/ar;y0-=(nh-h)/2;h=nh}return x0.toFixed(1)+' '+y0.toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1)}
+function pl(p){return p.map(function(q){return q.x.toFixed(1)+','+q.y.toFixed(1)}).join(' ')}
+
+/* ---------- ui helpers ---------- */
+function toast(m){var l=$('#layer');var old=$('.toast');if(old)old.remove();var d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=m;l.appendChild(d);clearTimeout(toastT);toastT=setTimeout(function(){d.remove()},2800)}
+function sheet(html){closeSheet();var d=document.createElement('div');d.className='overlay sheetwrap';d.id='sheet';d.innerHTML='<div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>'+html+'</div>';d.addEventListener('click',function(e){if(e.target===d)closeSheet()});$('#layer').appendChild(d)}
+function closeSheet(){var s=$('#sheet');if(s)s.remove()}
+function overlay(id,cls,html){var o=$('#'+id);if(o)o.remove();var d=document.createElement('div');d.id=id;d.className='overlay '+cls;d.innerHTML=html;$('#layer').appendChild(d)}
+function rm(id){var o=$('#'+id);if(o)o.remove()}
+function go(s){if(s!==S.screen)S.prev=S.screen;S.screen=s;render()}
+function clock(){var r=S.ride;if(!r)return'00:00';var t=Math.floor(r.elapsed||0);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+function initials(n){return n.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()}
+function placeBy(name){name=(name||'').trim().toLowerCase();return PLACES.filter(function(p){return p.name.toLowerCase()===name})[0]||null}
+function activeContacts(){return S.contacts.filter(function(c){return c.on})}
+function tripOf(){var A=placeBy(S.book.from),B=placeBy(S.book.to);if(!A||!B||A===B)return null;var m=mkRoute(A,B);return{A:A,B:B,route:m.route,alt:m.alt,km:polyLen(m.route)*PX_KM}}
+function fareFor(v,km){return Math.round(Math.max(v.base+v.km*km,v.base*1.6))}
+
+/* ---------- map ---------- */
+var STAGE_AR=.95;
+function vbStage(pts,pad,ar){var ys=pts.map(function(p){return p.y}),xs=pts.map(function(p){return p.x}),x0=Math.min.apply(0,xs);return vbFor(pts.concat([{x:x0,y:Math.max.apply(0,ys)+38},{x:x0,y:Math.min.apply(0,ys)-26}]),pad,ar||STAGE_AR)}
+var BASE=null;
+function baseMap(){if(BASE)return BASE;
+ var s='',X=[-100,40,120,170,255,320,460],Y=[-100,60,140,215,300,350,560],i,j;
+ for(i=0;i<X.length-1;i++)for(j=0;j<Y.length-1;j++){var x0=X[i]+7,y0=Y[j]+7,w=X[i+1]-X[i]-14,h=Y[j+1]-Y[j]-14;if(w>0&&h>0)s+='<rect x="'+x0+'" y="'+y0+'" width="'+w+'" height="'+h+'" rx="5" fill="var(--m-block)"/>'}
+ s+='<path d="M-300 395 C-100 350 150 420 230 385 S400 350 700 380 V900 H-300Z" fill="var(--m-water)"/>';
+ s+='<rect x="190" y="22" width="62" height="52" rx="12" fill="var(--m-park)"/><rect x="20" y="190" width="58" height="68" rx="14" fill="var(--m-park)"/><rect x="262" y="228" width="50" height="46" rx="12" fill="var(--m-park)"/>';
+ [75,145,190,215,300,345].forEach(function(x){s+='<line x1="'+x+'" y1="-300" x2="'+x+'" y2="760" stroke="var(--m-minor)" stroke-width="3.2"/>'});
+ [25,100,170,185,260,330].forEach(function(y){s+='<line x1="-300" y1="'+y+'" x2="660" y2="'+y+'" stroke="var(--m-minor)" stroke-width="3.2"/>'});
+ var ring='M-120 270 C 40 230 120 95 250 70 S 420 40 520 -20';
+ s+='<path d="'+ring+'" fill="none" stroke="var(--m-case)" stroke-width="12" stroke-linecap="round"/>';
+ [40,120,170,255,320].forEach(function(x){s+='<line x1="'+x+'" y1="-300" x2="'+x+'" y2="760" stroke="var(--m-case)" stroke-width="9.5"/>'});
+ [60,140,215,300,350].forEach(function(y){s+='<line x1="-300" y1="'+y+'" x2="660" y2="'+y+'" stroke="var(--m-case)" stroke-width="9.5"/>'});
+ [40,120,170,255,320].forEach(function(x){s+='<line x1="'+x+'" y1="-300" x2="'+x+'" y2="760" stroke="var(--m-road)" stroke-width="7"/>'});
+ [60,140,215,300,350].forEach(function(y){s+='<line x1="-300" y1="'+y+'" x2="660" y2="'+y+'" stroke="var(--m-road)" stroke-width="7"/>'});
+ s+='<path d="'+ring+'" fill="none" stroke="var(--m-road)" stroke-width="9" stroke-linecap="round"/>';
+ var L=function(t,x,y,r,sz){return '<text x="'+x+'" y="'+y+'" font-size="'+(sz||6.5)+'" font-weight="600" fill="var(--m-label)" letter-spacing=".4" text-anchor="middle"'+(r?' transform="rotate('+r+' '+x+' '+y+')"':'')+'>'+t+'</text>'};
+ s+=L('Ring Road',96,212,-30,7)+L('Outer Ring Rd',300,348.5,0)+L('Barakhamba Rd',170,100,90)+L('Aurobindo Marg',255,262,90)+L('Mathura Rd',318,192,90);
+ s+=L('Yamuna',300,392,0,8);
+ PLACES.forEach(function(p){s+='<text x="'+p.x+'" y="'+(p.y+20)+'" font-size="6.5" font-weight="700" fill="var(--m-label)" letter-spacing="1" text-anchor="middle" opacity=".8">'+p.name.toUpperCase()+'</text>'});
+ return BASE=s}
+function mapSVG(vb,inner,id,stage){
+ return '<svg class="map" '+(id?'id="'+id+'" ':'')+'viewBox="'+vb+'"'+(stage?' preserveAspectRatio="xMidYMid slice"':'')+' role="img" aria-label="Illustrative map">'
+ +'<rect x="-400" y="-400" width="1200" height="1300" fill="var(--m-land)"/>'+baseMap()+inner+'</svg>'}
+function pin(x,y,col,label){return '<g transform="translate('+x+' '+y+')"><circle r="11" fill="'+col+'" opacity=".16"/><circle r="6" fill="'+col+'" stroke="#fff" stroke-width="2.4"/>'+(label?'<text y="-12" text-anchor="middle" font-size="9" font-weight="700" fill="var(--ink)" stroke="var(--m-land)" stroke-width="3" paint-order="stroke">'+esc(label)+'</text>':'')+'</g>'}
+function bubble(x,y,label,dark){var w=label.length*5.4+16;return '<g transform="translate('+x+' '+(y-22)+')"><rect x="'+(-w/2)+'" y="-10" width="'+w+'" height="18" rx="9" fill="'+(dark?'var(--ink)':'var(--surface)')+'" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))"/><text y="3" text-anchor="middle" font-size="8.6" font-weight="700" fill="'+(dark?'var(--bg)':'var(--ink)')+'">'+esc(label)+'</text></g>'}
+function pinA(x,y,label){return '<g transform="translate('+x+' '+y+')"><circle r="8" fill="var(--ink)"/><circle r="3" fill="var(--bg)"/></g>'+(label?bubble(x,y,label,true):'')}
+function pinB(x,y,label){return '<g transform="translate('+x+' '+y+')"><rect x="-7.5" y="-7.5" width="15" height="15" rx="3" fill="#2563FF" stroke="#fff" stroke-width="2"/><rect x="-2.5" y="-2.5" width="5" height="5" fill="#fff"/></g>'+(label?bubble(x,y,label,false):'')}
+function meDot(id,x,y,col){return '<g id="'+id+'" transform="translate('+x+' '+y+')"><circle r="22" fill="'+col+'" opacity=".12"/><circle class="pulse" r="8" fill="'+col+'"/><circle r="7" fill="'+col+'" stroke="#fff" stroke-width="2.8"/></g>'}
+function carDot(id,x,y){return '<g id="'+id+'" transform="translate('+x+' '+y+')"><circle r="17" fill="#2563FF" opacity=".14"/><circle r="11.5" fill="var(--surface)" stroke="#2563FF" stroke-width="2.4" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))"/><rect x="-3.8" y="-7" width="7.6" height="14" rx="3" fill="#2563FF"/><rect x="-2.7" y="-4" width="5.4" height="3" rx="1" fill="#fff"/></g>'}
+function carTop(x,y,a,id){return '<g'+(id?' id="'+id+'"':'')+' transform="translate('+x+' '+y+') rotate('+a+')"><rect x="-4.6" y="-8.5" width="9.2" height="17" rx="3.6" fill="var(--ink)" style="filter:drop-shadow(0 1.5px 2px rgba(0,0,0,.35))"/><rect x="-3.3" y="-4.8" width="6.6" height="3.6" rx="1.2" fill="var(--m-land)" opacity=".85"/><rect x="-3.3" y="3" width="6.6" height="2.2" rx="1" fill="var(--m-land)" opacity=".5"/></g>'}
+function poi(x,y,kind,n){var pol=kind==='police',fill=pol?'#0B1B3F':'#0B8F5E',
+ g=pol?'<path d="M0 -4 L1.2 -1.1 L4.3 -.8 L2 1.3 L2.6 4.3 L0 2.7 L-2.6 4.3 L-2 1.3 L-4.3 -.8 L-1.2 -1.1Z" fill="#fff"/>':'<path d="M-3 .2 L-.8 2.4 L3.2 -2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+ return '<g transform="translate('+x+' '+y+')"><circle r="15" fill="'+fill+'" opacity=".14"/><circle r="10" fill="'+fill+'" stroke="#fff" stroke-width="2.2" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))"/>'+g+(n?'<g transform="translate(8.5 -8.5)"><circle r="5.5" fill="#fff"/><text y="2.6" text-anchor="middle" font-size="7.5" font-weight="800" fill="#0B1B3F">'+n+'</text></g>':'')+'</g>'}
+function routeLine(pts,id){return '<polyline'+(id?' id="'+id+'"':'')+' points="'+pl(pts)+'" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".12"/><polyline points="'+pl(pts)+'" fill="none" stroke="var(--m-route)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>'}
+
+/* ---------- ui bits ---------- */
+function T(i,t,s,a,cls){return '<button class="tile '+(cls||'')+'" data-a="'+(a==='openRide'||a==='rules'?a:'go')+'" data-v="'+a+'"><span class="ib">'+ic(i)+'</span><b>'+t+'</b><small>'+s+'</small></button>'}
+function prow(i,t,s,a,v){return '<button class="prow" data-a="'+a+'"'+(v?' data-v="'+v+'"':'')+'><span class="ib">'+ic(i)+'</span><span class="grow"><b>'+t+'</b><br><span class="mut sm">'+s+'</span></span>'+ic('back','chev')+'</button>'}
+function fmtT(s){s=Math.floor(s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function clockNow(m){var d=new Date(Date.now()+(m||0)*60000);return d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})}
+function vehIcon(v){return v.icon}
+function obArt(i){
+ var road='<path d="M-20 300 C 80 250 120 200 200 190 S 330 150 420 90" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="34" stroke-linecap="round"/><path d="M-20 300 C 80 250 120 200 200 190 S 330 150 420 90" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-dasharray="8 10"/>';
+ var grid='';for(var k=0;k<9;k++)grid+='<line x1="'+(k*50)+'" y1="0" x2="'+(k*50-120)+'" y2="400" stroke="rgba(255,255,255,.06)" stroke-width="1"/>';
+ var glow='<circle cx="200" cy="170" r="140" fill="url(#og)"/>';
+ var art=[
+  '<g transform="translate(200 190) rotate(-18)"><rect x="-34" y="-17" width="68" height="34" rx="12" fill="#fff"/><rect x="-18" y="-13" width="26" height="26" rx="6" fill="#BFD3FF"/><rect x="24" y="-13" width="6" height="8" rx="2" fill="#FFD166"/><rect x="24" y="5" width="6" height="8" rx="2" fill="#FFD166"/></g><g transform="translate(330 104)"><rect x="-9" y="-9" width="18" height="18" rx="4" fill="#fff"/><rect x="-3" y="-3" width="6" height="6" fill="#2563FF"/></g><g transform="translate(70 266)"><circle r="10" fill="#0B1B3F" stroke="#fff" stroke-width="3"/></g>',
+  '<g transform="translate(200 175)"><path d="M0-70 l58 22 v40 c0 36-25 62-58 74 -33-12-58-38-58-74 v-40z" fill="#fff"/><path d="M-22 0 l15 15 31-34" fill="none" stroke="#2563FF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>',
+  '<g transform="translate(200 178)"><circle cx="-46" cy="-10" r="24" fill="#BFD3FF"/><circle cx="46" cy="-10" r="24" fill="#BFD3FF"/><circle cx="0" cy="-26" r="30" fill="#fff"/><path d="M-80 60c4-30 20-44 34-44s30 14 34 44M12 60c4-30 20-44 34-44s30 14 34 44" fill="#BFD3FF"/><path d="M-44 70c6-38 24-56 44-56s38 18 44 56z" fill="#fff"/><circle cx="62" cy="-58" r="14" fill="#E5484D"/><circle cx="62" cy="-58" r="5" fill="#fff"/></g>'][i];
+ return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs><radialGradient id="og"><stop offset="0" stop-color="#7FA6FF" stop-opacity=".55"/><stop offset="1" stop-color="#7FA6FF" stop-opacity="0"/></radialGradient></defs>'+grid+glow+road+art+'</svg>'}
+
+/* ---------- screens ---------- */
+var SC={};
+var BACK={gloc:'safety',spots:'safety',police:'safety',contacts:'safety',fake:'safety',evidence:'safety',book:'home',vehicles:'book',history:'profile',driver:'profile',profile:'home',driverProfile:'driver'};
+
+SC.onboard={nav:false,html:function(){
+ var st=S.obStep,slides=[
+  {t:'Rides that just work',p:'Bike, auto or cab in a few taps. Fare, ETA and driver details up front.'},
+  {t:'Safety that stays quiet',p:'Every trip is route-monitored. Small detours are fine; a real deviation starts a calm check-in.'},
+  {t:'Your people, one tap away',p:'Choose who hears from you, and keep evidence safe in the background with Evidence mode.'}];
+ if(st<3){var s=slides[st];return '<div class="ob"><div class="row sp"><div class="logo"><i>'+ic('shield')+'</i>Aethena</div><button class="btn sm ghost" data-a="obSkip">Skip</button></div>'
+  +'<div class="obart">'+obArt(st)+'</div>'
+  +'<div class="obtxt"><div class="dots">'+[0,1,2].map(function(i){return '<i class="'+(i===st?'on':'')+'"></i>'}).join('')+'</div><h2>'+s.t+'</h2><p>'+s.p+'</p></div>'
+  +'<button class="btn" data-a="obNext">'+(st<2?'Continue':'Set up my contacts')+'</button></div>'}
+ return '<div class="ob"><div><div class="logo" style="margin-bottom:14px"><i>'+ic('shield')+'</i>Aethena</div><h2 class="hd">Who should we tell?</h2><p class="mut" style="margin:6px 0 0">These sample contacts are stored only in this browser. Edit them any time.</p>'
+  +'<div class="card tight">'+S.contacts.map(function(c){return '<div class="item"><div class="avatar">'+initials(c.n)+'</div><div class="grow"><b>'+esc(c.n)+'</b><div class="mut sm">'+esc(c.p)+' &middot; '+esc(c.r)+'</div></div><span class="chip ok">'+ic('check')+'Added</span></div>'}).join('')+'</div>'
+  +'<div class="card flat"><b>Permissions</b><div class="col" style="margin-top:8px">'+['Location while riding','Notifications','Ringtone for safety calls','Camera and microphone for Evidence mode'].map(function(p){return '<div class="row sp"><span class="sm">'+p+'</span><span class="chip sim">Allowed (simulated)</span></div>'}).join('')+'</div></div></div>'
+  +'<button class="btn" data-a="obDone">Start riding</button></div>'}};
+
+SC.home={nav:true,mf:true,html:function(){
+ var r=S.ride,s0=SPOTS[0],p0=POLICE[0];
+ var cars=[[120,198,25],[226,262,-62],[205,150,90],[96,282,0],[262,180,-20]];
+ var inner=cars.map(function(c,i){return carTop(c[0],c[1],c[2],'nc'+i)}).join('')+meDot('me',170,230,'#2563FF');
+ var h='<div class="mapstage">'+mapSVG(vbStage([{x:92,y:150},{x:250,y:290}],8),inner,'hm',true)
+  +'<div class="mapfloat"><span class="floatchip"><span class="d"></span>Protection on &middot; '+activeContacts().length+' contacts</span><button class="iconbtn" data-a="go" data-v="gloc" aria-label="Share live location">'+ic('nav')+'</button></div></div>';
+ h+='<div class="sheetbody">';
+ if(r&&r.phase!=='done')h+='<button class="banner info" style="margin-bottom:12px" data-a="openRide">'+ic('car')+'<span class="grow"><b>'+(r.phase==='live'?'On your way to '+esc(r.B.name):'Driver '+(r.phase==='arriving'?'on the way':'has arrived'))+'</b>'+(r.phase==='live'?'Route monitoring is on. Tap to open.':'Tap to see your driver.')+'</span></button>';
+ h+='<button class="search" data-a="go" data-v="book">'+ic('search')+'Where to?<span class="when">'+ic('clock')+'Now</span></button>'
+  +'<div style="margin-top:6px">'+[['Hauz Khas','Saved · Home','home'],['Connaught Place','Saved · Work','flag'],['IGI Airport T3','Recent','clock']].map(function(p){return '<button class="place" data-a="quickTo" data-v="'+p[0]+'"><span class="pi">'+ic(p[2])+'</span><span class="grow"><b>'+p[0]+'</b><br><span class="mut sm">'+p[1]+'</span></span>'+ic('back','chev')+'</button>'}).join('')+'</div>'
+  +'<div class="sec"><h3>Ride your way</h3><button class="lnk" data-a="go" data-v="book">See all</button></div>'
+  +'<div class="svc">'+VEH.map(function(v){return '<button data-a="svcPick" data-v="'+v.id+'"><span class="vi">'+ic(v.icon)+'</span>'+v.label.replace('Taxi ','')+'</button>'}).join('')+'</div>'
+  +'<div class="sec"><h3>Explore</h3></div>'
+  +'<div class="cats"><button class="cat r" data-a="navRides"><span class="cico">'+ic('car')+'</span><b>Rides</b><small>Book, track, pay and review</small></button><button class="cat g" data-a="go" data-v="safety"><span class="cico">'+ic('shield')+'</span><b>Generalised</b><small>Safety tools: location, safe spots, contacts, fake calls</small></button></div>'
+  +'<button class="promo" style="margin-top:12px" data-a="go" data-v="evidence"><span class="pico">'+ic('rec')+'</span><span class="grow"><b>Evidence mode</b><small>'+(S.ev.on?'Recording quietly &middot; tap to manage':'Quietly record and back up audio, video and location')+'</small></span>'+ic('back','chev" style="color:#fff')+'</button>'
+  +'<div class="sec"><h3>Help nearby</h3><span class="chip sim">Sample data</span></div>'
+  +'<div class="plist">'+prow('lamp',s0.n,s0.t+' &middot; '+s0.d,'go','spots')+prow('police',p0.n,p0.a+' &middot; '+p0.d,'go','police')+'</div>';
+ return h+'</div>'},
+ mount:function(){var a=0;S.locT=setInterval(function(){if(!$('#nc0')){clearInterval(S.locT);return}a+=.03;[[120,198,25],[226,262,-62],[205,150,90],[96,282,0],[262,180,-20]].forEach(function(c,i){var e=$('#nc'+i);if(!e)return;var rad=(c[2]-90)*Math.PI/180,d=Math.sin(a+i)*9;e.setAttribute('transform','translate('+(c[0]+Math.cos(rad)*d).toFixed(1)+' '+(c[1]+Math.sin(rad)*d).toFixed(1)+') rotate('+c[2]+')')})},120)}};
+
+SC.safety={title:'Safety',nav:true,html:function(){
+ var inner=SPOTS.map(function(s){return poi(s.x,s.y,'safe')}).join('')+POLICE.map(function(s){return poi(s.x,s.y,'police')}).join('')+meDot('me',170,230,'#2563FF');
+ var e=S.ev;
+ return '<p class="mut" style="margin:0 2px">Tools you can use any time, with or without a ride.</p>'
+ +'<div class="mapwrap" style="margin-top:10px">'+mapSVG('40 110 260 217',inner)+'<span class="chip sim tag" style="background:var(--surface)">Sample data</span></div>'
+ +'<div class="legend"><span><i class="ld you"></i>You</span><span><i class="ld safe"></i>Safe spots</span><span><i class="ld pol"></i>Police</span></div>'
+ +'<div class="card"><div class="row sp"><div class="row"><span class="tile" style="padding:0;border:0;box-shadow:none;background:none"><span class="ib" style="margin:0">'+ic('pin')+'</span></span><div><h3>Live location sharing</h3><div class="mut sm">'+(S.sharing?'Contacts can follow you (simulated)':'Off. Turn on to share with contacts')+'</div></div></div><button class="switch '+(S.sharing?'on':'')+'" data-a="share" role="switch" aria-checked="'+S.sharing+'" aria-label="Share live location"></button></div><button class="btn soft sm" style="margin-top:12px;width:100%" data-a="go" data-v="gloc">Open live map</button></div>'
+ +'<div class="grid2">'
+ +'<button class="tile wide ev" data-a="go" data-v="evidence"><span class="ib">'+ic('rec')+'</span><span><b>Evidence mode</b><br><small>'+(e.on?'Recording &middot; '+fmtT(e.secs)+' &middot; '+(e.queued?'waiting for network':'backed up'):'Record audio, video and location. Encrypted and backed up as it records.')+'</small></span>'+(e.on?'<span class="chip bad">On</span>':ic('back','chev'))+'</button>'
+ +T('lamp','Safe spots',SPOTS.length+' well-lit places nearby','spots')+T('police','Police stations',POLICE.length+' nearby, with contacts','police')
+ +T('users','Emergency contacts',activeContacts().length+' of '+S.contacts.length+' notified','contacts')+T('phone','Fake calls','Audio or video, your own voice','fake')+'</div>'
+ +'<div class="banner bad" style="margin-top:12px">'+ic('bell')+'<span><b>In an emergency, dial 112</b>The red SOS button alerts your contacts (simulated here).</span></div>'}};
+
+SC.gloc={title:'Live location',html:function(){
+ var inner=SPOTS.map(function(s){return poi(s.x,s.y,'safe')}).join('')+POLICE.map(function(s){return poi(s.x,s.y,'police')}).join('')+meDot('me',170,230,'#2563FF');
+ return '<div class="mapwrap">'+mapSVG('40 110 260 217',inner,'gm')+'<span class="chip sim tag" style="background:var(--surface)">Simulated location</span></div>'
+ +'<div class="card"><div class="row sp"><div><h3>Sharing with contacts</h3><div class="mut sm">Real GPS is replaced by a moving sample position in this prototype.</div></div><button class="switch '+(S.sharing?'on':'')+'" data-a="share" role="switch" aria-checked="'+S.sharing+'" aria-label="Share live location"></button></div>'
+ +(S.sharing?'<div class="banner ok" style="margin-top:10px">'+ic('check')+'<span><b>Sharing (simulated)</b>'+activeContacts().map(function(c){return esc(c.n)}).join(', ')+' would see you move.</span></div>':'')+'</div>'
+ +'<div class="legend"><span><i class="ld you"></i>You</span><span><i class="ld safe"></i>Safe spots</span><span><i class="ld pol"></i>Police</span></div>'},
+ mount:function(){var a=0;S.locT=setInterval(function(){var m=$('#me');if(!m){clearInterval(S.locT);return}a+=.08;m.setAttribute('transform','translate('+(170+Math.cos(a)*14).toFixed(1)+' '+(230+Math.sin(a*1.3)*9).toFixed(1)+')')},120)}};
+
+SC.spots={title:'Safe spots',html:function(){
+ var inner=SPOTS.map(function(s,i){return poi(s.x,s.y,'safe',String(i+1))}).join('')+meDot('me',170,200,'#2563FF');
+ return '<div class="mapwrap">'+mapSVG('70 90 200 167',inner)+'<span class="chip sim tag" style="background:var(--surface)">Sample data</span></div>'
+ +'<p class="mut sm" style="margin:12px 2px 0">Possible places to seek help. Not guaranteed safe or open.</p>'
+ +'<div class="card tight">'+SPOTS.map(function(s,i){return '<div class="item"><div class="avatar" style="background:#0B8F5E">'+(i+1)+'</div><div class="grow"><b>'+s.n+'</b><div class="mut sm">'+s.t+' &middot; '+s.open+'</div></div><span class="chip ok">'+s.d+'</span></div>'}).join('')+'</div>'}};
+
+SC.police={title:'Police stations',html:function(){
+ var inner=POLICE.map(function(s,i){return poi(s.x,s.y,'police',String(i+1))}).join('')+meDot('me',170,230,'#2563FF');
+ return '<div class="banner bad" style="margin-top:4px">'+ic('phone')+'<span class="grow"><b>In an emergency dial 112</b>Women helpline 1091. Police 100.</span></div>'
+ +'<div class="mapwrap" style="margin-top:12px">'+mapSVG('60 110 240 200',inner)+'<span class="chip sim tag" style="background:var(--surface)">Sample locations</span></div>'
+ +'<div class="card tight">'+POLICE.map(function(s,i){return '<div class="item"><div class="avatar" style="background:#0B1B3F">'+(i+1)+'</div><div class="grow"><b>'+s.n+'</b><div class="mut sm">'+s.a+' &middot; '+s.d+'</div><div class="num sm">'+s.ph+' <span class="mut">(placeholder)</span></div></div><button class="iconbtn" data-a="copy" data-v="'+s.ph+'" aria-label="Copy number">'+ic('copy')+'</button></div>'}).join('')+'</div>'}};
+
+SC.contacts={title:'Emergency contacts',html:function(){
+ return '<div class="card tight" style="margin-top:4px">'+(S.contacts.length?S.contacts.map(function(c,i){return '<div class="item"><div class="avatar">'+initials(c.n)+'</div><div class="grow"><b>'+esc(c.n)+'</b><div class="mut sm">'+esc(c.p)+' &middot; '+esc(c.r)+'</div></div><button class="switch '+(c.on?'on':'')+'" data-a="ctog" data-v="'+i+'" role="switch" aria-checked="'+c.on+'" aria-label="Notify '+esc(c.n)+'"></button><button class="iconbtn" data-a="cdel" data-v="'+i+'" aria-label="Remove '+esc(c.n)+'">'+ic('trash')+'</button></div>'}).join(''):'<p class="mut">No contacts yet. Add someone who should hear from you.</p>')+'</div>'
+ +(S.contacts.length<5?'<div class="card"><h3>Add a contact</h3><div class="field"><label for="cn">Name</label><input id="cn" type="text" placeholder="Name"></div><div class="field"><label for="cp">Phone</label><input id="cp" type="tel" placeholder="+91 ..."></div><div class="field"><label for="cr">Relationship</label><select id="cr"><option>Family</option><option>Friend</option><option>Partner</option><option>Colleague</option></select></div><button class="btn" style="margin-top:14px" data-a="cadd">'+ic('plus')+'Add contact</button></div>':'<p class="mut sm" style="margin:12px 2px">You can add up to five contacts.</p>')
+ +'<div class="banner info" style="margin-top:12px">'+ic('bell')+'<span><b>Escalation order</b>Switched-on contacts are notified together when a check-in goes unanswered. Messages are simulated here.</span></div>'}};
+
+SC.fake={title:'Fake calls',html:function(){
+ var f=S.fake,w=f.timer?'<div class="card" style="text-align:center"><div class="eyebrow">Call scheduled</div><div class="big num" style="margin:6px 0" id="fkLeft">'+f.left+'s</div><div class="mut sm">Incoming call from '+esc(f.name)+'. You can put your phone away.</div><div class="btnrow" style="margin-top:12px"><button class="btn ghost" data-a="fakeCancel">Cancel</button><button class="btn" data-a="fakeNow">Ring now</button></div></div>':'';
+ return '<div class="banner warn" style="margin-top:4px">'+ic('flag')+'<span><b>Simulated call, not a real phone call</b>It only rings inside Aethena. No call is placed to anyone.</span></div>'+w
+ +'<div class="card"><div class="field" style="margin-top:0"><label for="fkn">Caller name</label><input id="fkn" type="text" value="'+esc(f.name)+'" data-in="fakeName"></div>'
+ +'<div class="field"><label>Call type</label><div class="seg small" style="margin:0"><button class="'+(f.kind==='audio'?'on':'')+'" data-a="fkind" data-v="audio">Audio</button><button class="'+(f.kind==='video'?'on':'')+'" data-a="fkind" data-v="video">Video</button></div></div>'
+ +'<div class="field"><label>Delay before it rings</label><div class="seg s4 small" style="margin:0">'+[[3,'3 s'],[10,'10 s'],[30,'30 s'],[60,'1 min']].map(function(d){return '<button class="'+(f.delay===d[0]?'on':'')+'" data-a="fdelay" data-v="'+d[0]+'">'+d[1]+'</button>'}).join('')+'</div></div>'
+ +'<div class="field"><label for="fkr">Ringtone</label><div class="row"><select id="fkr" data-in="fakeRing">'+Object.keys(RINGS).map(function(k){return '<option value="'+k+'"'+(f.ring===k?' selected':'')+'>'+RINGS[k]+'</option>'}).join('')+'</select><button class="btn soft sm" data-a="ringPrev">Preview</button></div></div></div>'
+ +'<div class="card"><h3>Voice on the call</h3><p class="mut sm" style="margin:2px 0 10px">Upload a recording of your friend, or let Aethena read a short script aloud.</p>'
+ +'<div class="btnrow"><label class="btn ghost sm" style="cursor:pointer;flex:1">'+ic('upload')+' Upload voice<input id="fkv" type="file" accept="audio/*" hidden></label><button class="btn ghost sm" style="flex:1" data-a="rec">'+ic('mic')+' Record</button></div>'
+ +(f.voiceName?'<div class="chip ok" style="margin-top:8px">'+ic('check')+' '+esc(f.voiceName)+'</div>':'')
+ +'<div class="field"><label for="fks">Spoken script (used if no recording)</label><textarea id="fks" data-in="fakeScript">'+esc(f.script)+'</textarea></div></div>'
+ +'<button class="btn" style="margin-top:14px" data-a="fakeStart"'+(f.timer?' disabled':'')+'>'+ic('phone')+'Schedule call</button>'},
+ mount:function(){var fi=$('#fkv');if(fi)fi.addEventListener('change',function(){var file=fi.files&&fi.files[0];if(!file)return;if(S.fake.voiceUrl)URL.revokeObjectURL(S.fake.voiceUrl);S.fake.voiceUrl=URL.createObjectURL(file);S.fake.voiceName=file.name;render();toast('Voice attached')})}};
+
+SC.evidence={title:'Evidence mode',html:function(){
+ var e=S.ev,on=e.on;
+ function opt(k,i,t,s){return '<div class="item"><span class="tile" style="padding:0;border:0;box-shadow:none;background:none"><span class="ib" style="margin:0;background:var(--surface2);color:var(--ink)">'+ic(i)+'</span></span><div class="grow"><b>'+t+'</b><div class="mut sm">'+s+'</div></div><button class="switch '+(k==='auto'||k==='discreet'?'':'rec ')+(e[k]?'on':'')+'" data-a="evOpt" data-v="'+k+'" role="switch" aria-checked="'+e[k]+'" aria-label="'+t+'"></button></div>'}
+ return '<div class="evhero"><div class="eyebrow" style="color:'+(on?'var(--rec)':'var(--ink2)')+'">'+(on?'Recording quietly':'Ready when you are')+'</div>'
+ +'<button class="recbtn '+(on?'on':'')+'" data-a="evToggle" aria-label="'+(on?'Stop and save':'Start recording')+'"><i></i></button>'
+ +'<div class="big num" id="evClock">'+(on?fmtT(e.secs):'00:00')+'</div>'
+ +'<div class="wave'+(on&&e.audio?'':' off')+'">'+new Array(18).join('<i></i>')+'</div>'
+ +'<div class="evstat"><div><b class="num" id="evMb">'+e.mb.toFixed(1)+' MB</b><span>Captured</span></div><div><b class="num" id="evChunks">'+e.chunks+'</b><span>Chunks backed up</span></div><div><b class="num" id="evLoc">'+e.pts+'</b><span>Location points</span></div></div>'
+ +'<div id="evSync">'+evSyncHTML()+'</div>'
+ +'<button class="btn '+(on?'dark':'')+'" style="margin-top:14px" data-a="evToggle">'+(on?'Stop and save':'Start recording')+'</button>'
+ +'<div class="mut xs" style="margin-top:10px">Simulated: nothing is recorded or uploaded in this prototype.</div></div>'
+ +'<div class="sec"><h3>What to capture</h3></div><div class="card tight" style="margin-top:0">'
+ +opt('audio','mic','Audio','Microphone, low-bitrate')+opt('video','video','Video','Rear camera, screen can stay dark')+opt('loc','pin','Location','GPS point every few seconds')+'</div>'
+ +'<div class="sec"><h3>Behaviour</h3></div><div class="card tight" style="margin-top:0">'
+ +opt('discreet','eyeoff','Discreet display','Small indicator only, no sounds or flashes')+opt('auto','bell','Start automatically','When a ride alert or SOS is raised')+'</div>'
+ +'<div class="sec"><h3>How your evidence stays safe</h3></div><div class="card"><div class="how">'
+ +'<div><span class="n">1</span><span><b>Encrypted on your phone</b><br><span class="mut sm">Locked before it leaves the device. Only you hold the key.</span></span></div>'
+ +'<div><span class="n">2</span><span><b>Uploaded every few seconds</b><br><span class="mut sm">Small chunks go to secure cloud storage, so it is safe even if the phone is taken or broken.</span></span></div>'
+ +'<div><span class="n">3</span><span><b>You decide who sees it</b><br><span class="mut sm">Share a recording with a contact or the police only when you choose.</span></span></div></div></div>'
+ +'<div class="sec"><h3>Evidence vault</h3><span class="chip">'+ic('lock')+e.vault.length+' saved</span></div>'
+ +'<div class="card tight" style="margin-top:0">'+(e.vault.length?e.vault.map(function(v,i){return '<div class="item"><span class="tile" style="padding:0;border:0;box-shadow:none;background:none"><span class="ib" style="margin:0;background:var(--surface2);color:var(--ink)">'+ic('lock')+'</span></span><div class="grow"><b>'+esc(v.ctx)+'</b><div class="mut sm">'+v.when+' &middot; '+v.dur+' &middot; '+v.mb.toFixed(1)+' MB</div><span class="chip '+(v.st==='Private'?'':'blue')+'" style="margin-top:5px">'+esc(v.st)+'</span></div><div class="col" style="gap:6px"><button class="btn sm soft" data-a="evShare" data-v="'+i+'">Share</button><button class="btn sm ghost" data-a="evDel" data-v="'+i+'" aria-label="Delete recording">'+ic('trash')+'</button></div></div>'}).join(''):'<p class="mut sm">No recordings yet.</p>')+'</div>'}};
+
+SC.book={title:'Plan your ride',mf:true,html:function(){
+ var A=placeBy(S.book.from),B=placeBy(S.book.to),inner='',vb=vbStage([{x:90,y:130},{x:260,y:320}],10,1.2);
+ if(A&&B&&A!==B){var m=mkRoute(A,B);vb=vbStage(m.route,40,1.2);inner=routeLine(m.route)+pinA(A.x,A.y,A.name)+pinB(B.x,B.y,B.name)}
+ else inner=meDot('me',170,230,'#2563FF');
+ var pv=S.pickVeh?VEH.filter(function(v){return v.id===S.pickVeh})[0]:null;
+ return '<div class="mapstage short">'+mapSVG(vb,inner,null,true)+'</div><div class="sheetbody">'
+ +'<div class="row sp" style="margin-bottom:12px"><h2 class="hd" style="font-size:21px">Plan your ride</h2>'+(pv?'<span class="chip blue">'+ic(pv.icon)+pv.label+'</span>':'<span class="chip">'+ic('clock')+'Pickup now</span>')+'</div>'
+ +'<div class="trip"><span class="dotA"></span><div class="tin"><input id="bf" type="text" list="places" value="'+esc(S.book.from)+'" data-in="bookFrom" autocomplete="off" aria-label="Pickup"></div>'
+ +'<span class="ln"></span><span></span>'
+ +'<span class="dotB"></span><div class="tin"><input id="bt" type="text" list="places" value="'+esc(S.book.to)+'" data-in="bookTo" autocomplete="off" aria-label="Drop-off"><button class="iconbtn" style="width:34px;height:34px;box-shadow:none" data-a="swap" aria-label="Swap pickup and drop-off">'+ic('swap')+'</button></div></div>'
+ +'<datalist id="places">'+PLACES.map(function(p){return '<option value="'+p.name+'">'}).join('')+'</datalist>'
+ +'<div class="sec" style="margin-top:18px"><h3>Suggestions</h3><span class="chip sim">Sample places</span></div>'
+ +PLACES.filter(function(p){return p.name!==S.book.from}).slice(0,5).map(function(p){var on=p.name===S.book.to;return '<button class="place" data-a="pickTo" data-v="'+p.name+'"><span class="pi" style="'+(on?'background:var(--pale);color:var(--brand)':'')+'">'+ic(on?'check':'pin')+'</span><span class="grow"><b>'+p.name+'</b><br><span class="mut sm">New Delhi</span></span></button>'}).join('')
+ +'<button class="btn" style="margin-top:14px" data-a="seeVeh">See rides</button></div>'}};
+
+SC.vehicles={title:'Choose a ride',mf:true,html:function(){
+ var t=tripOf();if(!t)return '<div class="sheetbody" style="margin-top:70px"><p class="mut">Choose two different sample places first.</p></div>';
+ var mins=Math.round(t.km/22*60);
+ return '<div class="mapstage short">'+mapSVG(vbStage(t.route,40,1.2),routeLine(t.route)+pinA(t.A.x,t.A.y,t.A.name)+pinB(t.B.x,t.B.y,mins+' min'),null,true)+'</div><div class="sheetbody">'
+ +'<div class="row sp"><div><h2 class="hd" style="font-size:20px">Choose a ride</h2><div class="mut sm">'+t.A.name+' to '+t.B.name+' &middot; '+t.km.toFixed(1)+' km</div></div><span class="chip sim">Sample fares</span></div>'
+ +'<div style="margin-top:8px">'+VEH.map(function(v){var on=S.pickVeh===v.id;return '<button class="vrow" style="'+(on?'border-color:var(--brand);background:var(--pale)':'')+'" data-a="pickV" data-v="'+v.id+'"><span class="vi">'+ic(v.icon)+'</span><span class="grow"><b>'+v.label+'</b> <span class="mut sm">'+ic('user','').replace('class="ic ','style="width:12px;height:12px;vertical-align:-1px" class="ic ')+v.seats+'</span><br><span class="mut sm">'+v.eta+' min away &middot; drop '+clockNow(v.eta+mins)+'</span>'+(v.id==='mini'?'<br><span class="chip blue" style="margin-top:4px">Most booked</span>':'')+'</span><span class="pr num">'+rupee(fareFor(v,t.km))+'</span></button>'}).join('')+'</div>'
+ +'<div class="safeRow">'+'<span class="ib">'+ic('shield')+'</span><span class="grow"><b>Ride protection included</b><br><span class="mut sm">Route monitoring, check-ins and trip sharing on every ride.</span></span></div>'
+ +'<p class="mut xs" style="margin-top:12px">Vehicle types depend on local availability and regulations. Drivers shown are sample data.</p></div>'}};
+
+SC.arrive={title:'Your driver',back:'home',mf:true,html:function(){
+ var r=S.ride;if(!r)return '';var v=r.v,inner='<polyline points="'+pl(r.route)+'" fill="none" stroke="var(--m-route)" stroke-width="3.5" stroke-dasharray="1 7" stroke-linecap="round" opacity=".7"/>'+pinA(r.A.x,r.A.y,'Pickup')+pinB(r.B.x,r.B.y)+carDot('veh',r.dpos.x,r.dpos.y);
+ return '<div class="mapstage">'+mapSVG(vbStage([r.A,r.B,r.dstart],42),inner,'rm',true)+'<div class="mapfloat"><span class="floatchip"><span class="d"></span>Ride protection on</span></div></div><div class="sheetbody">'
+ +'<div class="row sp top"><div><div class="eyebrow" id="arSt">Driver on the way</div><div class="etaBig num" id="arEta" style="margin-top:2px">'+Math.ceil(v.eta)+' min</div><div class="mut sm">Pickup at '+esc(r.A.name)+'</div></div><div style="text-align:right"><span class="plate">'+v.reg+'</span><div class="mut sm" style="margin-top:4px">'+v.model+'</div></div></div>'
+ +'<div class="progress"><i id="arProg" style="width:0%"></i></div>'
+ +'<div class="dcard" style="margin-top:14px"><div class="avatar big">'+initials(r.drv)+'</div><div class="grow"><b style="font-size:16px">'+r.drv+'</b><div class="mut sm">'+ic('star','').replace('<svg','<svg style="width:13px;height:13px;vertical-align:-2px;fill:#F5B301;stroke:none"')+' '+v.rate+' &middot; '+v.trips.toLocaleString('en-IN')+' trips &middot; '+v.label+'</div><span class="chip ok" style="margin-top:5px">'+ic('check')+'Verified driver (sample)</span></div></div>'
+ +'<div class="act4"><button data-a="maskCall"><i>'+ic('phone')+'</i>Call</button><button data-a="msgDrv"><i>'+ic('msg')+'</i>Message</button><button class="safe" data-a="shareTrip"><i>'+ic('share')+'</i>Share trip</button><button class="rec" data-a="evToggle"><i>'+ic('rec')+'</i>'+(S.ev.on?'Recording':'Record')+'</button></div>'
+ +'<div id="arOtp"></div>'
+ +'<button class="btn ghost" style="margin-top:14px" data-a="cancelRide">Cancel ride</button></div>'},
+ mount:function(){var o=$('#arOtp');if(o)o.innerHTML='';updArrive()}};
+
+SC.live={title:'Live ride',back:'home',mf:true,html:function(){
+ var r=S.ride;if(!r)return '';
+ var inner='<polyline points="'+pl(r.alt)+'" fill="none" stroke="var(--m-route)" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" opacity=".45"/>'
+ +routeLine(r.route)
+ +'<polyline id="trail" points="" fill="none" stroke="#0B8F5E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'
+ +pinA(r.A.x,r.A.y)+pinB(r.B.x,r.B.y,r.B.name)
+ +'<g id="ghost" hidden><circle r="8" fill="none" stroke="#C77700" stroke-width="2" stroke-dasharray="3 3"/><text y="-12" text-anchor="middle" font-size="8.5" font-weight="700" fill="#C77700" stroke="var(--m-land)" stroke-width="3" paint-order="stroke">Last phone location</text></g>'
+ +carDot('veh',r.pos.x,r.pos.y);
+ var e=S.ev;
+ return '<div class="mapstage">'+mapSVG(vbStage(r.route.concat([{x:r.B.x,y:r.B.y}]),50),inner,'rm',true)+'<div class="mapfloat"><span class="floatchip" id="lvChip"><span class="d"></span><span>On planned route</span></span><button class="iconbtn" data-a="shareTrip" aria-label="Share trip">'+ic('share')+'</button></div></div><div class="sheetbody">'
+ +'<div class="row sp top"><div class="grow"><div class="eyebrow">Heading to</div><h3 style="font-size:20px;margin-top:2px">'+esc(r.B.name)+'</h3></div><div style="text-align:right"><div class="etaBig num" id="lvEta">--</div><div class="mut xs">to arrival</div></div></div>'
+ +'<div id="lvStatus" style="margin-top:12px"></div>'
+ +'<div class="stat"><div><b id="lvKm" class="num">--</b><span>Remaining</span></div><div><b id="lvDev" class="num">0 m</b><span>Off route</span></div><div><b class="num">'+rupee(r.fare)+'</b><span>Fare</span></div></div>'
+ +'<div class="card"><div class="dcard"><div class="avatar">'+initials(r.drv)+'</div><div class="grow"><b>'+r.drv+'</b><div class="mut sm">'+r.v.model+' &middot; <span class="plate" style="font-size:11.5px;padding:1px 6px">'+r.v.reg+'</span></div></div><div class="col" style="gap:5px;justify-items:end"><span id="lvBat" class="chip">'+ic('battery')+' <span>'+r.battery+'%</span></span><span id="lvNet" class="chip ok">Online</span></div></div></div>'
+ +'<div class="safeRow"><span class="ib">'+ic('shield')+'</span><span class="grow"><b>Route monitoring on</b><br><span class="mut sm">Watching: '+(activeContacts().map(function(x){return esc(x.n)}).join(', ')||'no contacts')+'</span></span></div>'
+ +'<div class="safeRow ev"><span class="ib">'+ic('rec')+'</span><span class="grow"><b>Evidence mode</b><br><span class="mut sm" id="evRideTxt">'+evRideTxt()+'</span></span><button class="switch rec '+(e.on?'on':'')+'" data-a="evToggle" role="switch" aria-checked="'+e.on+'" aria-label="Evidence mode"></button></div>'
+ +'<div class="act4"><button class="safe" data-a="shareTrip"><i>'+ic('share')+'</i>Share trip</button><button data-a="go" data-v="fake"><i>'+ic('phone')+'</i>Fake call</button><button data-a="dial112"><i>'+ic('bell')+'</i>Call 112</button><button data-a="report"><i>'+ic('flag')+'</i>Report</button></div>'
+ +'<details class="card" open><summary>Demo controls <span class="chip sim">Presenter</span></summary><p class="mut sm" style="margin:6px 0 10px">Trigger real-world situations to show how monitoring responds.</p><div class="col">'
+ +'<button class="btn soft sm" data-a="dDetour" style="width:100%">Traffic diversion (explained detour)</button>'
+ +'<button class="btn danger sm" data-a="dBad" style="width:100%">Unexplained deviation</button>'
+ +'<div class="row"><button class="btn ghost sm grow" data-a="dBat">Battery 14%</button><button class="btn ghost sm grow" data-a="dOff">Phone off</button><button class="btn ghost sm grow" data-a="dOn">Reconnect</button></div>'
+ +'<div class="row"><button class="btn ghost sm grow" data-a="dBack">Return to route</button><button class="btn soft sm grow" data-a="dSkip">Skip to arrival</button></div>'
+ +'<button class="btn ghost sm" data-a="rules" style="width:100%">'+ic('gear')+'Check-in timings</button></div></details>'
+ +'<div class="card"><h3>Monitoring log</h3><div class="log" id="lvLog" style="margin-top:10px"></div></div></div>'},
+ mount:function(){updLive();renderLog()}};
+
+SC.review={title:'Rate your ride',back:'home',nav:false,html:function(){
+ var r=S.ride||{fare:0,drv:'',v:{label:''}},rv=S.review,tags=['Safe driving','On time','Clean vehicle','Polite','Followed route'];
+ return '<div class="card" style="text-align:center;margin-top:4px"><div class="avatar big" style="margin:0 auto">'+initials(r.drv||'D')+'</div><h3 style="margin-top:10px;font-size:18px">How was your ride with '+esc(r.drv)+'?</h3>'
+ +'<div class="stars" role="radiogroup" aria-label="Rating">'+[1,2,3,4,5].map(function(n){return '<button data-a="star" data-v="'+n+'" class="'+(rv.stars>=n?'on':'')+'" aria-label="'+n+' star'+(n>1?'s':'')+'">'+ic('star')+'</button>'}).join('')+'</div>'
+ +'<div class="row" style="flex-wrap:wrap;justify-content:center;gap:8px">'+tags.map(function(t){var on=rv.tags.indexOf(t)>-1;return '<button class="chip '+(on?'blue':'')+'" style="padding:7px 12px;'+(on?'box-shadow:inset 0 0 0 1.5px var(--brand)':'')+'" data-a="rtag" data-v="'+t+'">'+t+'</button>'}).join('')+'</div>'
+ +'<div class="field" style="text-align:left"><label for="rvt">Review (optional)</label><textarea id="rvt" data-in="rvText" placeholder="Tell us more">'+esc(rv.text)+'</textarea></div></div>'
+ +'<div class="card"><div class="row sp"><h3>Fare</h3><span class="big num" style="font-size:24px">'+rupee(r.fare)+'</span></div>'
+ +'<div class="mut sm" style="margin-top:4px">'+(r.A?r.A.name+' to '+r.B.name:'')+' &middot; '+(r.km||0).toFixed(1)+' km &middot; '+r.v.label+'</div>'
+ +'<div class="field"><label>How did you pay?</label><div class="col">'+[['upi','QR or UPI','Pay digitally to the platform account'],['card','Card or wallet','Through a licensed provider'],['cash','Cash','Paid to the driver directly'],['other','Other supported method','']].map(function(m){return '<button class="radio '+(rv.method===m[0]?'on':'')+'" data-a="pay" data-v="'+m[0]+'"><span class="dot"></span><span><b>'+m[1]+'</b>'+(m[2]?'<br><span class="mut sm">'+m[2]+'</span>':'')+'</span></button>'}).join('')+'</div></div>'
+ +(rv.method==='upi'?'<div class="card flat" style="text-align:center"><div class="qr">'+qrCells()+'</div><span class="chip sim">Sample QR, no real payment</span></div>':'')+'</div>'
+ +'<button class="btn" style="margin-top:14px" data-a="submitReview">Confirm and submit</button>'
+ +'<button class="btn ghost" style="margin-top:10px" data-a="report">'+ic('flag')+'Report a safety concern or payment dispute</button>'}};
+function qrCells(){var s='',i,seed=7;for(i=0;i<121;i++){seed=(seed*9301+49297)%233280;var corner=(i%11<3&&Math.floor(i/11)<3)||(i%11>7&&Math.floor(i/11)<3)||(i%11<3&&Math.floor(i/11)>7);s+='<i class="'+(corner||seed/233280>.52?'':'w')+'"></i>'}return s}
+
+SC.thanks={title:'Thank you',back:'home',nav:true,html:function(){
+ var l=S.ledger[0];return '<div class="card" style="text-align:center;margin-top:8px"><div class="avatar big" style="margin:0 auto;background:var(--ok)">'+ic('check')+'</div><h3 style="margin-top:12px;font-size:18px">Thanks for riding</h3><p class="mut">Your payment confirmation is recorded as <b>'+l.method+', '+rupee(l.fare)+'</b>.</p></div>'
+ +'<div class="banner warn" style="margin-top:12px">'+ic('clock')+'<span><b>Awaiting driver reconciliation</b>Your confirmation alone is not proof of payment. It is matched against driver and payment records before settlement.</span></div>'
+ +'<button class="btn" style="margin-top:14px" data-a="go" data-v="home">Back to home</button><button class="btn ghost" style="margin-top:10px" data-a="go" data-v="driver">See it on the driver dashboard</button>'}};
+
+SC.history={title:'Rides and payments',html:function(){
+ return '<button class="search" style="margin-top:4px" data-a="go" data-v="book">'+ic('search')+'Book another ride</button><div class="card tight"><div style="padding-top:10px"><h3>Recent rides</h3></div>'
+ +S.ledger.slice(0,6).map(function(l){var m=l.st==='received'?['ok','Reconciled']:l.st==='flag'?['bad','Under review']:['warn','Awaiting driver'];return '<div class="item"><span class="tile" style="padding:0;border:0;box-shadow:none;background:none"><span class="ib" style="margin:0;background:var(--surface2);color:var(--ink)">'+ic('car')+'</span></span><div class="grow"><b>'+l.route+'</b><div class="mut sm">'+l.when+' &middot; '+l.method+'</div></div><div style="text-align:right"><b class="num">'+rupee(l.fare)+'</b><br><span class="chip '+m[0]+'">'+m[1]+'</span></div></div>'}).join('')+'</div>'
+ +'<button class="btn ghost" style="margin-top:12px" data-a="report">'+ic('flag')+'Report an issue</button>'}};
+
+SC.driver={title:'Driver dashboard',nav:true,html:function(){
+ var rec=S.ledger.filter(function(l){return l.st==='received'}),gross=rec.reduce(function(a,l){return a+l.fare},0),comm=gross*.15,net=gross-comm;
+ var hold=S.ledger.filter(function(l){return l.st!=='received'}).reduce(function(a,l){return a+l.fare},0);
+ var cashComm=rec.filter(function(l){return l.method==='Cash'}).reduce(function(a,l){return a+Math.round(l.fare*.15)},0),pts=500-cashComm;
+ var flags=S.ledger.filter(function(l){return l.st==='flag'}).length,d=S.driverView||VEH[1];
+ var h='<div class="dhero"><div class="row sp"><button class="row dpbtn" data-a="go" data-v="driverProfile" aria-label="Open driver profile"><div class="avatar">'+initials(d.drv)+'</div><div><b>'+d.drv+'</b><div style="opacity:.75;font-size:12px">'+d.model+' &middot; '+d.reg+'</div></div>'+ic('back','chev')+'</button><div style="text-align:right"><button class="switch '+(S.online?'on':'')+'" data-a="online" role="switch" aria-checked="'+S.online+'" aria-label="Online"></button><div style="font-size:11px;opacity:.75;margin-top:3px">'+(S.online?'Online':'Offline')+'</div></div></div>'
+  +'<div class="row" style="gap:18px;margin-top:14px"><div><div style="opacity:.7;font-size:11px">Today</div><b class="num" style="font-family:var(--fd);font-size:22px">'+rupee(net)+'</b></div><div><div style="opacity:.7;font-size:11px">Trips</div><b class="num" style="font-family:var(--fd);font-size:22px">'+rec.length+'</b></div><div><div style="opacity:.7;font-size:11px">Rating</div><b class="num" style="font-family:var(--fd);font-size:22px">'+d.rate+'</b></div></div></div>'
+ +'<div class="seg s3 small">'+[['req','Requests'],['earn','Earnings'],['tx','Ledger']].map(function(t){return '<button class="'+(S.driverTab===t[0]?'on':'')+'" data-a="dtab" data-v="'+t[0]+'">'+t[1]+(t[0]==='tx'&&flags?' ('+flags+')':'')+'</button>'}).join('')+'</div>';
+ if(S.driverTab==='req'){
+  h+=(S.assigned.length?'<div class="card tight"><div style="padding-top:10px"><h3>Assigned trips</h3></div>'+S.assigned.map(function(a){return '<div class="item"><div class="grow"><b>'+a.from+' to '+a.to+'</b><div class="mut sm">Passenger (name hidden) &middot; ETA '+a.eta+' min</div></div><span class="chip ok">'+rupee(a.fare)+'</span></div>'}).join('')+'</div>':'')
+  +'<div class="card tight"><div style="padding-top:10px"><h3>Ride requests</h3></div>'+(S.online?S.reqs.map(function(q){return '<div class="item"><div class="grow"><b>'+q.from+' to '+q.to+'</b><div class="mut sm">'+q.km+' km &middot; pickup in '+q.eta+' min</div><div class="row" style="margin-top:8px"><button class="btn sm" data-a="accept" data-v="'+q.id+'">Accept</button><button class="btn sm ghost" data-a="declineReq" data-v="'+q.id+'">Decline</button></div></div><b class="num" style="font-family:var(--fd);font-size:16px">'+rupee(q.fare)+'</b></div>'}).join('')||'<p class="mut">No open requests.</p>':'<p class="mut">You are offline. Switch on to receive requests.</p>')+'</div>'}
+ if(S.driverTab==='earn'){
+  var days=['M','T','W','T','F','S','Today'],vals=[1240,980,1520,1110,1890,1430,Math.max(gross,0)],mx=Math.max.apply(0,vals);
+  h+='<div class="stat"><div><b class="num">'+rupee(gross)+'</b><span>Gross</span></div><div><b class="num">-'+rupee(comm)+'</b><span>Commission</span></div><div><b class="num">'+rupee(net)+'</b><span>Net</span></div></div>'
+  +'<div class="card"><div class="row sp"><div><div class="eyebrow">Points balance (cash rides)</div><b class="num big" style="font-size:24px">'+pts+' pts</b></div><span class="chip">1 pt = '+rupee(1)+'</span></div><div class="mut sm" style="margin-top:6px">Commission on cash rides is deducted from points. Digital rides settle net of commission.</div></div>'
+  +'<div class="card"><h3>Last 7 days</h3><div class="bars">'+vals.map(function(v,i){return '<div><i class="'+(i===6?'today':'')+'" style="height:'+Math.max(6,v/mx*70)+'px" title="'+rupee(v)+'"></i><span>'+days[i]+'</span></div>'}).join('')+'</div></div>'
+  +'<div class="banner info" style="margin-top:12px">'+ic('wallet')+'<span><b>On hold: '+rupee(hold)+'</b>Rides awaiting reconciliation or under review are excluded until resolved.</span></div>'}
+ if(S.driverTab==='tx'){
+  h+='<div class="card tight"><div style="padding-top:10px"><h3>Transaction history</h3></div>'+S.ledger.map(function(l,i){var st=l.st==='received'?'<span class="chip ok">Received</span>':l.st==='flag'?'<span class="chip bad">Flagged</span>':'<span class="chip warn">Pending</span>';
+   return '<div class="item" style="align-items:flex-start"><div class="grow"><b>'+l.id+'</b> <span class="mut sm">'+l.when+'</span><div class="sm">'+l.route+'</div><div class="mut sm">Passenger confirmed: '+l.method+' '+rupee(l.fare)+' &middot; Commission '+rupee(l.fare*.15)+'</div>'+(l.note?'<div class="sm" style="color:var(--bad);margin-top:3px">'+l.note+'</div>':'')
+   +(l.st!=='received'?'<div class="row" style="margin-top:8px"><button class="btn sm" data-a="recv" data-v="'+i+'">Mark received</button>'+(l.st!=='flag'?'<button class="btn sm ghost" data-a="flagTx" data-v="'+i+'">Flag</button>':'')+'</div>':'')+'</div><div style="text-align:right">'+st+'</div></div>'}).join('')+'</div>'
+  +'<p class="mut sm" style="margin-top:10px">Digital payments will settle through a compliant payment provider. Integration is pending in this prototype.</p>'}
+ return h}};
+
+var NAVMAP={safety:'safety',gloc:'safety',spots:'safety',police:'safety',contacts:'safety',fake:'safety',evidence:'safety',book:'rides',vehicles:'rides',arrive:'rides',live:'rides',review:'rides',thanks:'rides',history:'rides',profile:'profile',driver:'profile',driverProfile:'profile'};
+function navActive(){return NAVMAP[S.screen]||'home'}
+function navHTML(){var a=navActive();
+ function b(id,icn,lbl,act){return '<button class="nv'+(a===id?' on':'')+'" data-a="'+act+'"'+(a===id?' aria-current="page"':'')+'>'+ic(icn)+'<span>'+lbl+'</span></button>'}
+ return '<nav class="bar" aria-label="Main navigation">'+b('home','home','Home','navHome')+b('rides','car','Rides','navRides')+'<div class="nvc"><button class="sos" data-a="sos" aria-label="Emergency SOS"><span>SOS</span></button></div>'+b('safety','shield','Safety','navSafety')+b('profile','user','Account','navProfile')+'</nav>'}
+
+SC.profile={title:'Account',html:function(){
+ return '<div class="pcard"><div class="avatar big">'+ic('user')+'</div><div class="grow"><b class="pname">Guest rider</b><div class="mut sm">Demo profile. Sign-in is not part of this prototype.</div></div><span class="chip sim">Sample</span></div>'
+ +'<div class="stat"><div><b class="num">'+S.contacts.length+'</b><span>Contacts</span></div><div><b class="num">'+S.ledger.length+'</b><span>Rides</span></div><div><b class="num">'+S.ev.vault.length+'</b><span>Recordings</span></div></div>'
+ +'<div class="plist">'+prow('users','Emergency contacts','Who hears from you','go','contacts')+prow('rec','Evidence vault',S.ev.vault.length+' encrypted recordings','go','evidence')+prow('shield','Safety check-in rules','Grace period and escalation','rules')+prow('wallet','Rides and payments','Receipts, reviews, disputes','go','history')+'</div>'
+ +'<div class="plist">'+prow('car','Driver dashboard','Requests, earnings, reconciliation','go','driver')+prow('gear','Switch theme','Light or dark','theme')+prow('home','Replay onboarding','Walk through the intro again','replay')+prow('x','Sign out (demo)','Returns to the welcome screens','logout')+'</div>'}};
+SC.driverProfile={title:'Driver profile',html:function(){
+ var d=S.driverView||VEH[1],rec=S.ledger.filter(function(l){return l.st==='received'}),gross=rec.reduce(function(a,l){return a+l.fare},0),comm=gross*.15,net=gross-comm;
+ var revs=[['Ananya R.',5,'Calm driving and took the route I asked for.'],['Karan M.',5,'On time, clean car, polite.'],['Sneha P.',4,'Good ride. Pickup took a minute longer.']];
+ function stars(n){var s='';for(var i=0;i<5;i++)s+=ic('star').replace('<svg','<svg style="width:13px;height:13px;fill:'+(i<n?'#F5B301':'var(--surface3)')+';stroke:none"');return s}
+ return '<div class="dhero"><div class="row"><div class="avatar big">'+initials(d.drv)+'</div><div class="grow"><b class="pname">'+d.drv+'</b><div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip" style="background:rgba(255,255,255,.14);color:#fff">'+ic('check')+' Verified (sample)</span><span class="chip" style="background:rgba(255,255,255,.14);color:#fff">'+ic('star').replace('<svg','<svg style="width:12px;height:12px;fill:#F5B301;stroke:none"')+' '+d.rate+'</span></div></div></div></div>'
+ +'<div class="banner info" style="margin-top:10px">'+ic('flag')+'<span><b>Placeholder profile data</b>Photo, verification and reviews are sample content. Earnings and history come from this session.</span></div>'
+ +'<div class="card"><div class="row sp"><div><h3>Availability</h3><div class="mut sm">'+(S.online?'Online and receiving requests':'Offline')+'</div></div><button class="switch '+(S.online?'on':'')+'" data-a="online" role="switch" aria-checked="'+S.online+'" aria-label="Online"></button></div></div>'
+ +'<div class="card"><h3>Vehicle</h3><div class="row sp" style="margin-top:8px"><div><div class="mut sm">'+d.label+' &middot; '+d.model+'</div><span class="plate">'+d.reg+'</span></div><span class="chip">'+d.seats+' seat'+(d.seats>1?'s':'')+'</span></div></div>'
+ +'<div class="stat"><div><b class="num">'+rupee(gross)+'</b><span>Gross</span></div><div><b class="num">-'+rupee(comm)+'</b><span>Commission</span></div><div><b class="num">'+rupee(net)+'</b><span>Net</span></div></div>'
+ +'<div class="stat" style="margin-top:8px"><div><b class="num">'+rec.length+'</b><span>Completed today</span></div><div><b class="num">'+d.trips.toLocaleString('en-IN')+'</b><span>All-time rides</span></div><div><b class="num">'+d.rate+'</b><span>Rating</span></div></div>'
+ +'<div class="card tight"><div style="padding-top:10px"><h3>Ride history</h3></div>'+S.ledger.slice(0,4).map(function(l){var m=l.st==='received'?['ok','Received']:l.st==='flag'?['bad','Flagged']:['warn','Pending'];return '<div class="item"><div class="grow"><b>'+l.route+'</b><div class="mut sm">'+l.when+' &middot; '+l.method+'</div></div><div style="text-align:right"><b class="num">'+rupee(l.fare)+'</b><br><span class="chip '+m[0]+'">'+m[1]+'</span></div></div>'}).join('')+'</div>'
+ +'<div class="card tight"><div class="row sp" style="padding-top:10px"><h3>Customer reviews</h3><span class="chip sim">Sample data</span></div>'+revs.map(function(r){return '<div class="item" style="align-items:flex-start"><div class="avatar" style="width:34px;height:34px;font-size:12px">'+initials(r[0])+'</div><div class="grow"><b>'+r[0]+'</b> <span style="white-space:nowrap">'+stars(r[1])+'</span><div class="mut sm">'+r[2]+'</div></div></div>'}).join('')+'</div>'
+ +'<div class="plist">'+prow('gear','Notifications','Placeholder setting','phSetting')+prow('wallet','Payout account','Placeholder setting','phSetting')+prow('x','Log out (demo)','Returns to the welcome screens','logout')+'</div>'}};
+
+/* ---------- render ---------- */
+function render(){
+ var sc=SC[S.screen],app=$('#app'),prevEl=$('#screen'),changed=S.lastScreen!==S.screen,keep=(prevEl&&!changed)?prevEl.scrollTop:0;
+ var head;
+ if(S.screen==='onboard')head='';
+ else if(S.screen==='home')head='<header class="top float"><div class="pillbtn"><span class="logo"><i>'+ic('shield')+'</i>Aethena</span></div><span style="flex:1"></span><button class="iconbtn" data-a="menu" aria-label="Menu">'+ic('menu')+'</button></header>';
+ else if(sc.mf)head='<header class="top float"><button class="iconbtn" data-a="back" aria-label="Back">'+ic('back')+'</button><span style="flex:1"></span>'+(S.screen==='live'||S.screen==='arrive'?'<button class="iconbtn" data-a="menu" aria-label="Menu">'+ic('menu')+'</button>':'')+'</header>';
+ else head='<header class="top"><button class="iconbtn" data-a="back" aria-label="Back">'+ic('back')+'</button><h1>'+(sc.title||'')+'</h1></header>';
+ if(sc.nav&&!sc.mf&&S.screen!=='home'&&S.screen==='safety')head='<header class="top"><h1 style="font-size:24px">'+sc.title+'</h1>'+(S.screen==='safety'?'<button class="iconbtn" data-a="go" data-v="evidence" aria-label="Evidence mode" style="color:var(--rec)">'+ic('rec')+'</button>':'')+'</header>';
+ var nav=(sc.nav===false||(sc.mf&&S.screen!=='home'))?'':navHTML();
+ app.innerHTML=head+'<main class="screen'+(sc.mf?' mf':'')+'" id="screen">'+sc.html()+'</main>'+nav;
+ if(S.locT){clearInterval(S.locT);S.locT=null}
+ if(sc.mount)sc.mount();
+ var sc2=$('#screen');if(sc2){sc2.scrollTop=keep;if(changed)sc2.classList.add('enter');if(sc.mf){var hd=$('header.top.float'),ms=$('.mapstage'),f=function(){if(hd&&ms)hd.classList.toggle('solid',sc2.scrollTop>ms.offsetHeight-70)};sc2.addEventListener('scroll',f,{passive:true});f()}}S.lastScreen=S.screen;evPill()}
+
+/* ---------- evidence mode ---------- */
+function evSyncHTML(){var e=S.ev;if(!e.on)return '<div class="sync" style="color:var(--ink2)">'+ic('lock')+'End-to-end encrypted &middot; backed up as it records</div>';
+ if(e.queued)return '<div class="sync q">'+ic('wifioff')+e.queued+' chunk'+(e.queued>1?'s':'')+' encrypted on phone &middot; uploads when back online</div>';
+ return '<div class="sync">'+ic('cloud')+'Encrypted &middot; last backup '+(e.secs-e.lastUp)+'s ago</div>'}
+function evRideTxt(){var e=S.ev;if(!e.on)return 'Off &middot; record quietly in one tap';return 'Recording '+fmtT(e.secs)+' &middot; '+(e.queued?'waiting for network':'backed up')}
+function evPill(){var e=S.ev,p=$('#evPill');if(!e.on||S.screen==='evidence'||S.screen==='onboard'){if(p)p.remove();return}
+ if(!p){p=document.createElement('button');p.id='evPill';p.setAttribute('data-a','go');p.setAttribute('data-v','evidence');p.setAttribute('aria-label','Evidence mode is recording. Open');$('#layer').appendChild(p)}
+ p.className='evpill'+(e.discreet?' min':'');p.innerHTML='<span class="rd"></span>'+(e.discreet?fmtT(e.secs):'Evidence &middot; '+fmtT(e.secs)+' &middot; '+(e.queued?'queued':'backed up'))}
+function updEv(){var e=S.ev,set=function(id,x){var el=$('#'+id);if(el)el.innerHTML=x};
+ set('evClock',fmtT(e.secs));set('evMb',e.mb.toFixed(1)+' MB');set('evChunks',e.chunks);set('evLoc',e.pts);set('evSync',evSyncHTML());set('evRideTxt',evRideTxt());evPill()}
+function evTick(){var e=S.ev;e.secs++;e.mb+=(e.video?.55:0)+(e.audio?.03:0);if(e.loc&&e.secs%2===0)e.pts++;
+ var off=S.ride&&S.ride.phase==='live'&&S.ride.offline;
+ if(e.secs%3===0){if(off)e.queued++;else{e.chunks+=1+e.queued;if(e.queued&&S.ride)rideLog('Evidence: '+e.queued+' queued chunk(s) uploaded after reconnect.','ok');e.queued=0;e.lastUp=e.secs}}
+ updEv()}
+function evStart(ctx){var e=S.ev;if(e.on)return;e.on=true;e.secs=0;e.mb=0;e.chunks=0;e.queued=0;e.pts=0;e.lastUp=0;
+ e.ctx=ctx||(S.ride&&S.ride.phase!=='done'?'Ride · '+S.ride.A.name+' to '+S.ride.B.name:'Personal recording');
+ clearInterval(e.timer);e.timer=setInterval(evTick,1000);if(!e.discreet)tone(660,0,.12,'sine',.06);buzz([40]);
+ if(S.ride&&S.ride.phase==='live')rideLog('Evidence mode started. Audio, video and location are encrypted and backed up continuously (simulated).','ok');
+ render()}
+function evStop(){var e=S.ev;if(!e.on)return;clearInterval(e.timer);e.on=false;
+ e.vault.unshift({ctx:e.ctx,when:'Today '+clockNow(0),dur:fmtT(e.secs),mb:Math.max(.1,e.mb),st:'Private'});
+ if(S.ride&&S.ride.phase==='live')rideLog('Evidence mode stopped. Recording saved to your vault.','ok');
+ render();toast('Saved to your evidence vault')}
+
+
+/* ---------- ride engine ---------- */
+function rideLog(m,t){var r=S.ride;if(!r)return;r.log.unshift({t:clock(),m:m,c:t||''});renderLog()}
+function renderLog(){var el=$('#lvLog');if(!el||!S.ride)return;el.innerHTML=S.ride.log.map(function(l){return '<div><time>'+l.t+'</time><span class="'+l.c+'">'+esc(l.m)+'</span></div>'}).join('')||'<span class="mut">Nothing yet.</span>'}
+function startBooking(vid){
+ var t=tripOf(),v=VEH.filter(function(x){return x.id===vid})[0];if(!t)return;
+ var dir={x:-.55,y:.83},d=v.eta/PX_MIN,ds=clampPt({x:t.A.x+dir.x*d,y:t.A.y+dir.y*d});
+ S.ride={A:t.A,B:t.B,route:t.route,alt:t.alt,km:t.km,fare:fareFor(v,t.km),v:v,drv:v.drv,phase:'arriving',dstart:ds,dpos:{x:ds.x,y:ds.y},dprog:0,otp:String(1000+Math.floor(Math.random()*8999)),
+  pos:{x:t.A.x,y:t.A.y},path:t.route,s:0,mode:'route',speed:16,corr:[t.alt],state:'ok',t0:0,offline:false,battery:62,log:[],elapsed:0,stopped:false,last:performance.now(),trail:[],resume:0,lowWarned:false,lastPhone:null};
+ S.driverView=v;S.assigned.unshift({from:t.A.name,to:t.B.name,fare:S.ride.fare,eta:v.eta});
+ closeSheet();go('arrive');clearInterval(tickTimer);tickTimer=setInterval(tick,100);toast('Driver assigned (simulated)')}
+function tick(){
+ var r=S.ride;if(!r){clearInterval(tickTimer);return}
+ var now=performance.now(),dt=Math.min(.25,(now-r.last)/1000);r.last=now;
+ if(r.phase==='arriving'){r.dprog=Math.min(1,r.dprog+dt/9);r.dpos={x:r.dstart.x+(r.A.x-r.dstart.x)*r.dprog,y:r.dstart.y+(r.A.y-r.dstart.y)*r.dprog};if(r.dprog>=1)r.phase='waiting';updArrive();return}
+ if(r.phase!=='live')return;
+ r.elapsed+=dt*8;
+ if(!r.stopped){r.s+=r.speed*dt;var L=polyLen(r.path);if(r.s>=L){r.s=L;r.pos=pointAt(r.path,L);pathEnd()}else r.pos=pointAt(r.path,r.s)}
+ if(r.phase!=='live')return;
+ if(!r.trail.length||Math.hypot(r.trail[r.trail.length-1].x-r.pos.x,r.trail[r.trail.length-1].y-r.pos.y)>3)r.trail.push({x:r.pos.x,y:r.pos.y});
+ monitor(now);updLive()}
+function pathEnd(){var r=S.ride;
+ if(r.mode==='route'){arrived();return}
+ if(r.mode==='detour'||r.mode==='return'){r.mode='route';r.path=r.route;r.s=r.resume;return}
+ if(r.mode==='bad'){r.stopped=true;rideLog('Vehicle has stopped moving','warn')}}
+function arrived(){var r=S.ride;if(r.phase!=='live')return;r.phase='done';stopRing();rm('safeCall');rm('checkin');
+ if(r.state==='alerted'){rideLog('Ride ended. All-clear sent to contacts.','ok')}
+ toast('You have arrived');S.review={stars:0,tags:[],text:'',method:'upi'};setTimeout(function(){go('review')},500)}
+function inCorr(p){return S.ride.corr.some(function(c){return nearest(p,c).d<16})}
+function setState(s){S.ride.state=s}
+function monitor(now){
+ var r=S.ride,c=S.cfg,n=nearest(r.pos,r.route);r.dev=n.d;
+ var off=n.d>c.thr,exp=inCorr(r.pos),risk=off&&!exp,st=r.state;
+ if(r.mode==='bad'&&['grace','checkin','call'].indexOf(st)>-1)risk=true;
+ if(st==='alerted')return;
+ if(!risk){
+  if(st==='grace'||st==='checkin'||st==='call'){rideLog('Back on a plausible route. Escalation cancelled.','ok');stopRing();rm('safeCall');rm('checkin')}
+  if(off&&exp&&st!=='explained')rideLog('Route changed, but a plausible alternative explains it. Watching quietly.','warn');
+  setState(off?'explained':'ok');return}
+ if(st==='ok'||st==='explained'){r.t0=now;setState('grace');rideLog('Significant deviation. No plausible route explains it. Grace period started.','warn');return}
+ if(st==='safe'){if(now-r.t0>20000){r.t0=now;setState('grace');rideLog('Still off route after your confirmation. Re-checking.','warn')}return}
+ if(st==='grace'&&now-r.t0>c.grace*1000){
+  if(r.offline){doAlert('Phone is unreachable and the vehicle is still off route. Escalating without waiting for a reply.');return}
+  r.t0=now;setState('checkin');showCheckin();rideLog('Discreet safety check-in sent.','warn');return}
+ if(st==='checkin'&&now-r.t0>c.checkin*1000){
+  if(r.offline){doAlert('Check-in could not reach the phone. Escalating.');return}
+  rm('checkin');r.t0=now;setState('call');showSafeCall();rideLog('No reply. Are You Safe? call is ringing.','bad');return}
+ if(st==='call'&&now-r.t0>c.call*1000){stopRing();rm('safeCall');doAlert('Are You Safe? call went unanswered.')}}
+function showCheckin(){buzz([120,80,120]);tone(880,0,.25,'sine',.1);
+ overlay('checkin','','');var o=$('#checkin');o.className='notif';o.style.cssText='';o.innerHTML='<div class="row top"><div class="avatar" style="width:36px;height:36px">'+ic('shield')+'</div><div class="grow"><b>Aethena ride check-in</b><div class="mut sm">Your route has changed. Is everything okay?</div></div></div><div class="row" style="margin-top:10px"><button class="btn sm" data-a="imSafe">I am okay</button><button class="btn sm danger" data-a="needHelp">I need help</button></div>'}
+function showSafeCall(){startRing('urgent',[500,200,500,200,500]);
+ overlay('safeCall','call safe ring-anim','<div></div><div><div class="av">'+ic('shield').replace('class="ic ','class="ic " style="width:54px;height:54px" data-x="')+'</div><div class="nm">Are You Safe?</div><div class="sub">Aethena safety check &middot; <span id="scLeft"></span></div><div class="sub" style="font-size:12px;margin-top:10px;max-width:260px">Your vehicle is off route. Answer to stop contacts being alerted.</div></div><div class="acts"><button class="no" data-a="decCall"><i>'+ic('x')+'</i>Decline</button><button class="yes" data-a="imSafe"><i>'+ic('check')+'</i>I am safe</button></div>');
+ var iv=setInterval(function(){var e=$('#scLeft');if(!e){clearInterval(iv);return}var left=Math.max(0,Math.ceil(S.cfg.call-(performance.now()-S.ride.t0)/1000));e.textContent='alerting contacts in '+left+'s'},250)}
+function doAlert(reason){
+ var r=S.ride;r.state='alerted';stopRing();rm('safeCall');rm('checkin');buzz([200,100,200,100,200]);
+ var names=activeContacts().map(function(c){return c.n}).join(', ')||'no contacts';
+ rideLog('ALERT: '+reason,'bad');
+ rideLog('Emergency contacts notified ('+names+') with last location, vehicle '+r.v.reg+' and route. Simulated, no message sent.','bad');
+ if(r.offline)rideLog('Used last phone location plus authorised driver-side data (simulated).','warn');
+ if(r.battery<=15)rideLog('Included battery level '+r.battery+'% in the alert.','warn');
+ toast('Emergency contacts alerted (simulated)');
+ if(S.ev.auto&&!S.ev.on)evStart('Auto-started by ride alert')}
+function updArrive(){var r=S.ride;if(!r)return;var v=$('#veh');if(v)v.setAttribute('transform','translate('+r.dpos.x.toFixed(1)+' '+r.dpos.y.toFixed(1)+')');
+ var e=$('#arEta');if(e)e.textContent=r.phase==='arriving'?Math.max(1,Math.ceil(r.v.eta*(1-r.dprog)))+' min':'Arrived';
+ var s=$('#arSt');if(s)s.textContent=r.phase==='arriving'?'Driver on the way':'Your driver is here';
+ var p=$('#arProg');if(p)p.style.width=Math.round(r.dprog*100)+'%';
+ var o=$('#arOtp');if(o&&r.phase==='waiting'&&!o.innerHTML)o.innerHTML='<div class="card" style="text-align:center"><div class="eyebrow">Share this PIN with your driver</div><div class="otp">'+r.otp.split('').map(function(d){return '<span>'+d+'</span>'}).join('')+'</div><div class="mut sm">Check the plate is '+r.v.reg+' before you get in.</div><button class="btn" style="margin-top:12px" data-a="startRide">Start ride</button></div>'}
+function updLive(){
+ var r=S.ride;if(!r||S.screen!=='live')return;
+ var v=$('#veh');if(v)v.setAttribute('transform','translate('+r.pos.x.toFixed(1)+' '+r.pos.y.toFixed(1)+')');
+ var t=$('#trail');if(t)t.setAttribute('points',pl(r.trail));
+ var g=$('#ghost');if(g){if(r.offline&&r.lastPhone){g.hidden=false;g.setAttribute('transform','translate('+r.lastPhone.x.toFixed(1)+' '+r.lastPhone.y.toFixed(1)+')')}else g.hidden=true}
+ var rem;if(r.mode==='route')rem=polyLen(r.route)-r.s;else if(r.mode==='bad')rem=Math.abs(r.B.x-r.pos.x)+Math.abs(r.B.y-r.pos.y);else rem=polyLen(r.path)-r.s+(polyLen(r.route)-r.resume);
+ var mins=Math.max(1,Math.round(rem*PX_MIN));var set=function(id,x){var e=$('#'+id);if(e)e.textContent=x};
+ set('lvEta',mins+' min');set('lvKm',(rem*PX_KM).toFixed(1)+' km');set('lvDev',Math.round((r.dev||0)*25)+' m');
+ var bat=$('#lvBat');if(bat){bat.className='chip '+(r.battery<=15?'bad':'');bat.lastElementChild.textContent=r.battery+'%'}
+ var net=$('#lvNet');if(net){net.className='chip '+(r.offline?'bad':'ok');net.textContent=r.offline?'Offline':'Online'}
+ var c=S.cfg,now=performance.now(),left=function(x,t){return Math.max(0,Math.ceil(x-(now-r.t0)/1000))};
+ var M={ok:['ok','On planned route','Monitoring quietly. Detours up to '+Math.round(c.thr*25)+' m are tolerated.'],
+  explained:['warn','Plausible detour','The route changed but a plausible alternative explains it. No alarm raised.'],
+  grace:['warn','Checking the deviation','Off route. Grace period ends in '+left(c.grace)+'s, then we check in.'],
+  checkin:['warn','Check-in sent','Waiting for your reply. Safety call in '+left(c.checkin)+'s.'],
+  call:['bad','Are You Safe? call ringing','Contacts are alerted in '+left(c.call)+'s unless you answer.'],
+  safe:['ok','You confirmed you are safe','Escalation stopped. We keep watching quietly.'],
+  alerted:['bad','Emergency contacts alerted','Contacts have your last location and vehicle details (simulated).']}[r.state];
+ var ch=$('#lvChip');if(ch){ch.className='floatchip '+(M[0]==='ok'?'':M[0]);ch.lastElementChild.textContent=r.offline?'Phone offline':M[1]}
+ var h='<div class="banner '+M[0]+'">'+ic(M[0]==='ok'?'shield':'bell')+'<span><b>'+M[1]+'</b>'+M[2]+'</span></div>';
+ if(r.offline)h+='<div class="banner warn" style="margin-top:8px">'+ic('wifioff')+'<span><b>Phone unreachable</b>Using last known passenger location and authorised driver-side data.</span></div>';
+ if(r.battery<=15&&!r.offline)h+='<div class="banner warn" style="margin-top:8px">'+ic('battery')+'<span><b>Low battery</b>Please charge your phone. Contacts are told if the ride becomes risky.</span></div>';
+ if(r.state==='alerted')h+='<button class="btn" style="margin-top:8px" data-a="allClear">I am safe. Send all-clear</button>';
+ var box=$('#lvStatus');if(box&&box.dataset.h!==h){box.dataset.h=h;box.innerHTML=h}}
+function stopTick(){clearInterval(tickTimer);tickTimer=null}
+
+/* ---------- fake call ---------- */
+function showIncoming(opts){
+ startRing(opts.ring,[600,300,600]);
+ var vid=opts.video;
+ overlay('call','call ring-anim '+(vid?'video':''),'<div></div><div><div class="av">'+esc(initials(opts.name))+'</div><div class="nm">'+esc(opts.name)+'</div><div class="sub">'+(vid?'Video call':'mobile')+'</div></div><div class="acts"><button class="no" data-a="callNo"><i>'+ic('x')+'</i>Decline</button><button class="yes" data-a="callYes"><i>'+ic(vid?'video':'phone')+'</i>Accept</button></div>')}
+function callAccepted(){
+ stopRing();var f=S.fake,vid=f.kind==='video',t0=Date.now();
+ var o=$('#call');o.className='overlay call'+(vid?' video':'');
+ o.innerHTML='<div class="sub" id="ct">00:00</div><div><div class="av">'+esc(initials(f.name))+'</div><div class="nm">'+esc(f.name)+'</div><div class="eq" style="margin-top:18px"><i></i><i></i><i></i><i></i><i></i></div></div><div><div class="row" style="justify-content:center;gap:26px;margin-bottom:34px;opacity:.9"><div style="text-align:center">'+ic('mute')+'<div class="sm">Mute</div></div><div style="text-align:center">'+ic('spk')+'<div class="sm">Speaker</div></div><div style="text-align:center">'+ic(vid?'video':'grid')+'<div class="sm">'+(vid?'Camera':'Keypad')+'</div></div></div><div class="acts" style="justify-content:center"><button class="no" data-a="callEnd"><i>'+ic('x')+'</i>End</button></div></div>';
+ S.callIv=setInterval(function(){var e=$('#ct');if(!e){clearInterval(S.callIv);return}var s=Math.floor((Date.now()-t0)/1000);e.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},500);
+ try{if(f.voiceUrl){S.voice=new Audio(f.voiceUrl);S.voice.play().catch(function(){})}else if(window.speechSynthesis){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(f.script))}}catch(e){}}
+function endCall(){stopRing();clearInterval(S.callIv);rm('call');try{if(S.voice)S.voice.pause();if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}}
+function fakeTick(){var f=S.fake;f.left--;var e=$('#fkLeft');if(e)e.textContent=f.left+'s';if(f.left<=0){clearInterval(f.timer);f.timer=null;if(S.screen==='fake')render();showIncoming({name:f.name,video:f.kind==='video',ring:f.ring})}}
+
+/* ---------- sheets ---------- */
+function openRules(){var c=S.cfg;function row(l,k,min,max,sf,hint){return '<div class="row sp" style="margin-top:12px"><div><b>'+l+'</b><div class="mut sm">'+hint+'</div></div><div class="stepper"><button data-a="cfg" data-k="'+k+'" data-d="-1" data-min="'+min+'" data-max="'+max+'" aria-label="Less">-</button><span class="num">'+c[k]+sf+'</span><button data-a="cfg" data-k="'+k+'" data-d="1" data-min="'+min+'" data-max="'+max+'" aria-label="More">+</button></div></div>'}
+ sheet('<h3>Safety check-in rules</h3><div class="banner info" style="margin-top:8px">'+ic('clock')+'<span><b>Demo timing</b>Times are in seconds so you can show the full sequence quickly. A real deployment would use minutes.</span></div>'
+ +row('Grace period','grace',2,30,' s','Tolerates detours and GPS noise')+row('Check-in wait','checkin',3,30,' s','Before the Are You Safe? call')+row('Call rings for','call',4,30,' s','Before contacts are alerted')+row('Deviation threshold','thr',15,60,' px','Off-route distance (1 px = 25 m)')
+ +'<button class="btn" style="margin-top:16px" data-a="closeSheet">Done</button>')}
+function openReport(){sheet('<h3>Report an issue</h3><div class="field"><label>Type</label><div class="seg small" style="margin:0"><button class="on" data-a="rpType" data-v="Safety concern">Safety</button><button data-a="rpType" data-v="Payment dispute">Payment</button></div></div><div class="field"><label for="rpt">What happened?</label><textarea id="rpt" placeholder="Describe the issue"></textarea></div><button class="btn" style="margin-top:12px" data-a="rpSend">Submit report</button>')}
+
+/* ---------- actions ---------- */
+var A={
+ go:function(t){closeSheet();var v=t.dataset.v;if(v==='openRide')return A.openRide();if(v==='rules')return openRules();if(v==='home')S.tab=S.tab;go(v)},
+ back:function(){if(S.screen==='arrive'||S.screen==='live'||S.screen==='review')return go('home');
+  if(['gloc','spots','police','contacts','fake'].indexOf(S.screen)>-1&&(S.prev==='home'||S.prev==='safety'))return go(S.prev);
+  go(BACK[S.screen]||'home')},
+ tab:function(t){S.tab=t.dataset.v;render()},
+ menu:function(){openMenu()},closeSheet:function(){closeSheet()},
+ obNext:function(){S.obStep++;render()},obSkip:function(){S.obStep=3;render()},obDone:function(){S.tab='gen';go('home')},
+ replay:function(){closeSheet();S.obStep=0;go('onboard')},
+ theme:function(){var d=document.documentElement,cur=d.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');d.dataset.theme=cur==='dark'?'light':'dark'},
+ share:function(){S.sharing=!S.sharing;render()},
+ copy:function(t){var v=t.dataset.v;try{navigator.clipboard.writeText(v).then(function(){toast('Number copied')},function(){toast(v)})}catch(e){toast(v)}},
+ ctog:function(t){var c=S.contacts[+t.dataset.v];c.on=!c.on;saveContacts();render()},
+ cdel:function(t){S.contacts.splice(+t.dataset.v,1);saveContacts();render()},
+ cadd:function(){var n=$('#cn').value.trim(),p=$('#cp').value.trim();if(!n||!p){toast('Enter a name and phone number');return}S.contacts.push({n:n,p:p,r:$('#cr').value,on:true});saveContacts();render();toast('Contact added')},
+ fkind:function(t){S.fake.kind=t.dataset.v;render()},fdelay:function(t){S.fake.delay=+t.dataset.v;render()},
+ ringPrev:function(){audio();(RING[S.fake.ring]||RING.classic)()},
+ rec:function(){var ok=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;if(!ok){toast('Microphone is not available here. Upload a recording instead.');return}navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){s.getTracks().forEach(function(x){x.stop()});toast('Microphone ready. Recording ships in the full app.')},function(){toast('Microphone is not available here. Upload a recording instead.')})},
+ fakeStart:function(){audio();var f=S.fake;f.left=f.delay;f.timer=setInterval(fakeTick,1000);render();toast('Call scheduled in '+f.delay+' s')},
+ fakeCancel:function(){clearInterval(S.fake.timer);S.fake.timer=null;render()},
+ fakeNow:function(){clearInterval(S.fake.timer);S.fake.timer=null;S.fake.left=0;render();showIncoming({name:S.fake.name,video:S.fake.kind==='video',ring:S.fake.ring})},
+ callYes:function(){callAccepted()},callNo:function(){endCall()},callEnd:function(){endCall()},
+ swap:function(){var f=S.book.from;S.book.from=S.book.to;S.book.to=f;render()},
+ seeVeh:function(){var t=tripOf();if(!t){toast('Pick two different sample places from the suggestions');return}go('vehicles')},
+ pickV:function(t){var v=VEH.filter(function(x){return x.id===t.dataset.v})[0],tr=tripOf(),f=fareFor(v,tr.km);
+  sheet('<div class="row"><div class="avatar">'+initials(v.drv)+'</div><div class="grow"><b>'+v.drv+'</b><div class="mut sm">'+v.rate+' rating &middot; '+v.trips.toLocaleString('en-IN')+' trips</div></div><span class="chip sim">Sample driver</span></div>'
+  +'<div class="card"><div class="row sp"><div><div class="mut sm">'+v.label+' &middot; '+v.model+'</div><span class="plate">'+v.reg+'</span></div><div style="text-align:right"><div class="eyebrow">Fare</div><b class="num" style="font-family:var(--f-d);font-size:24px">'+rupee(f)+'</b></div></div>'
+  +'<div class="stat"><div><b>'+v.eta+' min</b><span>Pickup ETA</span></div><div><b>'+tr.km.toFixed(1)+' km</b><span>Distance</span></div><div><b>'+v.seats+'</b><span>Seats</span></div></div></div>'
+  +'<button class="btn" data-a="confirmBook" data-v="'+v.id+'">Confirm booking</button><button class="btn ghost" style="margin-top:8px" data-a="closeSheet">Back</button>')},
+ confirmBook:function(t){startBooking(t.dataset.v)},
+ openRide:function(){closeSheet();var r=S.ride;if(!r||r.phase==='done'){toast('Book a ride to start monitoring');return}go(r.phase==='live'?'live':'arrive')},
+ shareTrip:function(){toast('Trip shared with '+activeContacts().length+' contact(s) (simulated)')},
+ cancelRide:function(){S.ride=null;stopTick();S.assigned.shift();go('home');toast('Ride cancelled')},
+ startRide:function(){var r=S.ride;r.phase='live';r.last=performance.now();r.mode='route';r.path=r.route;r.s=0;r.pos={x:r.A.x,y:r.A.y};rideLog('Ride started. Monitoring route to '+r.B.name+'.','ok');go('live')},
+ rules:function(){closeSheet();openRules()},
+ cfg:function(t){var d=t.dataset,k=d.k,v=S.cfg[k]+(+d.d)*(k==='thr'?2:1);S.cfg[k]=Math.max(+d.min,Math.min(+d.max,v));openRules()},
+ dDetour:function(){var r=S.ride,L=polyLen(r.route),n=nearest(r.pos,r.route);if(L-n.s<110){toast('Too close to the destination for a diversion');return}
+  var R1=pointAt(r.route,n.s+25),R2=pointAt(r.route,n.s+110),R3=pointAt(r.route,Math.min(L,n.s+150)),dx=R2.x-R1.x,dy=R2.y-R1.y,l=Math.hypot(dx,dy)||1,px=-dy/l*40,py=dx/l*40;
+  var a=clampPt({x:R1.x+px,y:R1.y+py});if(Math.abs(a.x-(R1.x+px))>1||Math.abs(a.y-(R1.y+py))>1){px=-px;py=-py}
+  var path=[{x:r.pos.x,y:r.pos.y},{x:R1.x+px,y:R1.y+py},{x:R2.x+px,y:R2.y+py},R3];r.corr.push(path);r.path=path;r.s=0;r.mode='detour';r.resume=Math.min(L,n.s+150);r.stopped=false;rideLog('Demo: vehicle takes a parallel street (traffic diversion).')},
+ dBad:function(){var r=S.ride,n=nearest(r.pos,r.route),a=r.route[n.i],b=r.route[n.i+1],dx=b.x-a.x,dy=b.y-a.y,l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l,px=-uy,py=ux;
+  var t=clampPt({x:r.pos.x+px*110,y:r.pos.y+py*110});if(Math.abs(t.x-(r.pos.x+px*110))>1||Math.abs(t.y-(r.pos.y+py*110))>1){px=-px;py=-py}
+  var d1=clampPt({x:r.pos.x+px*110,y:r.pos.y+py*110}),d2=clampPt({x:d1.x+ux*80,y:d1.y+uy*80});r.path=[{x:r.pos.x,y:r.pos.y},d1,d2];r.s=0;r.mode='bad';r.stopped=false;rideLog('Demo: vehicle leaves the route towards an unknown area.','warn')},
+ dBack:function(){var r=S.ride,n=nearest(r.pos,r.route);r.path=[{x:r.pos.x,y:r.pos.y},{x:n.x,y:n.y}];r.s=0;r.mode='return';r.resume=n.s;r.stopped=false;rideLog('Demo: vehicle returns to the planned route.','ok')},
+ dBat:function(){var r=S.ride;r.battery=14;rideLog('Battery at 14%. Low-battery warning shown.','warn');var risky=['grace','checkin','call','alerted'].indexOf(r.state)>-1;if(risky)rideLog('Ride is still at risk, so contacts were told the battery is low (simulated).','bad');toast('Low battery warning')},
+ dOff:function(){var r=S.ride;if(r.offline)return;r.offline=true;r.lastPhone={x:r.pos.x,y:r.pos.y};rideLog('Phone lost connectivity. Using last known location and driver-side data.','warn');
+  if(['grace','checkin','call'].indexOf(r.state)>-1){rm('checkin');rm('safeCall');doAlert('Phone became unreachable after a serious deviation. Escalating without a passenger reply.')}},
+ dOn:function(){var r=S.ride;if(!r.offline)return;r.offline=false;r.lastPhone=null;rideLog('Phone reconnected.','ok')},
+ dSkip:function(){var r=S.ride;r.mode='route';r.path=r.route;r.s=polyLen(r.route)-.5;r.stopped=false;r.state='ok';stopRing();rm('safeCall');rm('checkin')},
+ imSafe:function(){var r=S.ride;stopRing();rm('safeCall');rm('checkin');r.state='safe';r.t0=performance.now();rideLog('You confirmed you are safe. Escalation stopped.','ok')},
+ needHelp:function(){rm('checkin');doAlert('You asked for help.')},
+ decCall:function(){stopRing();rm('safeCall');doAlert('Are You Safe? call was declined.')},
+ allClear:function(){var r=S.ride;r.state='safe';r.t0=performance.now();rideLog('All-clear sent to contacts.','ok');toast('All-clear sent (simulated)')},
+ star:function(t){S.review.stars=+t.dataset.v;render()},
+ rtag:function(t){var a=S.review.tags,i=a.indexOf(t.dataset.v);if(i>-1)a.splice(i,1);else a.push(t.dataset.v);render()},
+ pay:function(t){S.review.method=t.dataset.v;render()},
+ report:function(){openReport()},rpType:function(t){S.rpType=t.dataset.v;var s=t.parentNode.children;for(var i=0;i<s.length;i++)s[i].className=s[i]===t?'on':''},
+ rpSend:function(){closeSheet();toast('Report submitted. Our team will review it.')},
+ submitReview:function(){var r=S.ride,m={upi:'UPI',card:'Card',cash:'Cash',other:'Other'}[S.review.method];
+  S.ledger.unshift({id:'TX-'+(2045+S.ledger.length),route:r.A.name+' to '+r.B.name,fare:r.fare,method:m,st:'pending',when:'Just now'});
+  S.assigned.shift();S.ride.phase='done';stopTick();go('thanks')},
+ dtab:function(t){S.driverTab=t.dataset.v;render()},online:function(){S.online=!S.online;render()},
+ accept:function(t){var q=S.reqs.filter(function(x){return x.id===+t.dataset.v})[0];S.reqs=S.reqs.filter(function(x){return x!==q});S.assigned.push({from:q.from,to:q.to,fare:q.fare,eta:q.eta});render();toast('Trip accepted')},
+ declineReq:function(t){S.reqs=S.reqs.filter(function(x){return x.id!==+t.dataset.v});render()},
+ recv:function(t){var l=S.ledger[+t.dataset.v];l.st='received';delete l.note;render();toast('Marked as received')},
+ flagTx:function(t){var l=S.ledger[+t.dataset.v];l.st='flag';l.note='Flagged by driver for review. Passenger confirmation does not match driver records.';render()},
+ sos:function(){audio();openSOS()},sosCancel:function(){clearInterval(sosTimer);closeSheet()},sosNow:function(){sosSend()},
+ navHome:function(){closeSheet();go('home')},
+ navSafety:function(){closeSheet();go('safety')},
+ navRides:function(){closeSheet();var r=S.ride;if(r&&r.phase!=='done')return A.openRide();go('book')},
+ navProfile:function(){closeSheet();go('profile')},
+ phSetting:function(){toast('Placeholder setting. Not connected in this prototype.')},
+ logout:function(){closeSheet();S.obStep=0;go('onboard');toast('Signed out (demo)')},
+ resetDemo:function(){location.reload()}
+};
+/* ---------- added icons ---------- */
+IC.search='<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>';
+IC.msg='<path d="M4 5h16v11H9l-5 4z"/>';
+IC.share='<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/>';
+IC.rec='<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/>';
+IC.lock='<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/>';
+IC.cloud='<path d="M7 18h10a4 4 0 00.5-7.97A6 6 0 006.2 9.1 4.5 4.5 0 007 18z"/><path d="M9.5 13.5l2 2 3.5-3.5"/>';
+IC.eyeoff='<path d="M3 3l18 18"/><path d="M10.6 6.1A9.8 9.8 0 0112 6c5 0 8.5 4.5 9.5 6-.5.8-1.6 2.3-3.2 3.6M6.4 7.6C4.6 8.9 3.3 10.8 2.5 12c1 1.5 4.5 6 9.5 6 1.5 0 2.9-.4 4.1-1"/>';
+
+/* ---------- navigation history ---------- */
+function go(s){if(s!==S.screen){S.hist=S.hist||[];if(S.screen&&S.screen!=='onboard')S.hist.push(S.screen);if(S.hist.length>30)S.hist.shift();S.prev=S.screen}S.screen=s;render()}
+
+/* ---------- sheets (restyled) ---------- */
+function openMenu(){sheet('<h3 style="margin-bottom:12px;font-size:18px">Menu</h3><div class="plist" style="margin-top:0">'
+ +prow('rec','Evidence mode',S.ev.on?'Recording · '+fmtT(S.ev.secs):'Record and back up quietly','go','evidence')
+ +prow('car','Driver dashboard','Requests, earnings, reconciliation','go','driver')
+ +prow('wallet','Rides and payments','Receipts, reviews, disputes','go','history')
+ +prow('shield','Safety check-in rules','Grace period and escalation timing','rules')
+ +prow('gear','Switch theme','Light or dark','theme')
+ +prow('home','Replay onboarding','Walk through the intro again','replay')+'</div>')}
+function openSOS(){var n=5;sheet('<div style="text-align:center"><div class="avatar big" style="margin:0 auto;background:var(--bad)">'+ic('bell')+'</div><h3 style="margin-top:12px;font-size:19px">Alerting your contacts</h3><div class="big num" id="sosN" style="font-size:52px;color:var(--bad);margin:8px 0">5</div><p class="mut sm">'+activeContacts().length+' contact(s) will get your live location'+(S.ev.auto?' and Evidence mode will start':'')+'. Simulated, no message is sent. In a real emergency dial 112.</p><div class="btnrow" style="margin-top:14px"><button class="btn ghost" data-a="sosCancel">Cancel</button><button class="btn danger" data-a="sosNow">Send now</button></div></div>');
+ clearInterval(sosTimer);sosTimer=setInterval(function(){n--;var e=$('#sosN');if(!e){clearInterval(sosTimer);return}e.textContent=n;if(n<=0)sosSend()},1000)}
+function sosSend(){clearInterval(sosTimer);var auto=S.ev.auto&&!S.ev.on;
+ sheet('<div style="text-align:center"><div class="avatar big" style="margin:0 auto;background:var(--ok)">'+ic('check')+'</div><h3 style="margin-top:12px;font-size:19px">Alert sent (simulated)</h3><p class="mut">'+activeContacts().map(function(c){return esc(c.n)}).join(', ')+' would now see your location.'+(auto||S.ev.on?' Evidence mode is recording and backing up.':'')+' In a real emergency call 112.</p><button class="btn" data-a="closeSheet">Close</button></div>');buzz([200,100,200]);
+ if(auto)evStart('Auto-started by SOS')}
+
+/* ---------- extra actions ---------- */
+var A2={
+ back:function(){if(S.screen==='arrive'||S.screen==='live'||S.screen==='review'){S.hist=[];return go('home')}
+  var h=S.hist||[];while(h.length){var p=h.pop();if(!p||p===S.screen||!SC[p])continue;if(['onboard','arrive','live','review','thanks'].indexOf(p)>-1)continue;if(p==='vehicles'&&!tripOf())continue;S.prev=S.screen;S.screen=p;render();return}
+  S.screen=BACK[S.screen]||'home';render()},
+ navHome:function(){closeSheet();S.hist=[];go('home')},
+ quickTo:function(t){var v=t.dataset.v;S.book.to=v;if(S.book.from===v)S.book.from=v==='Karol Bagh'?'Connaught Place':'Karol Bagh';S.pickVeh=null;go('vehicles')},
+ svcPick:function(t){S.pickVeh=t.dataset.v;go('book')},
+ pickTo:function(t){S.book.to=t.dataset.v;render()},
+ maskCall:function(){toast('Calling '+(S.ride?S.ride.drv:'driver')+' through a masked number (simulated)')},
+ msgDrv:function(){toast('Sent: "I am at the pickup point" (simulated)')},
+ dial112:function(){toast('112 is India\'s emergency number. Dial it from your phone in a real emergency.')},
+ pickV:function(t){var v=VEH.filter(function(x){return x.id===t.dataset.v})[0],tr=tripOf(),f=fareFor(v,tr.km);S.pickVeh=v.id;
+  sheet('<div class="row sp"><h3 style="font-size:19px">'+v.label+'</h3><b class="big num" style="font-size:24px">'+rupee(f)+'</b></div>'
+  +'<div class="mut sm" style="margin-top:2px">'+tr.A.name+' to '+tr.B.name+' &middot; '+tr.km.toFixed(1)+' km</div>'
+  +'<div class="card"><div class="dcard"><div class="avatar big">'+initials(v.drv)+'</div><div class="grow"><b style="font-size:16px">'+v.drv+'</b><div class="mut sm">'+v.rate+' rating &middot; '+v.trips.toLocaleString('en-IN')+' trips</div><span class="chip sim" style="margin-top:5px">Sample driver</span></div></div>'
+  +'<div class="row sp" style="margin-top:12px"><div class="mut sm">'+v.model+'</div><span class="plate">'+v.reg+'</span></div></div>'
+  +'<div class="stat"><div><b>'+v.eta+' min</b><span>Pickup</span></div><div><b>'+tr.km.toFixed(1)+' km</b><span>Distance</span></div><div><b>'+v.seats+'</b><span>Seats</span></div></div>'
+  +'<div class="safeRow"><span class="ib">'+ic('shield')+'</span><span class="grow sm"><b>Protected ride</b><br><span class="mut">Route monitoring and check-ins are on for this trip.</span></span></div>'
+  +'<button class="btn" style="margin-top:14px" data-a="confirmBook" data-v="'+v.id+'">Confirm '+v.label+'</button><button class="btn ghost" style="margin-top:8px" data-a="closeSheet">Back</button>')},
+ dBad:function(){var r=S.ride,n=nearest(r.pos,r.route),a=r.route[n.i],b=r.route[n.i+1],dx=b.x-a.x,dy=b.y-a.y,l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l;
+  var c1=clampPt({x:r.pos.x-uy*110,y:r.pos.y+ux*110}),c2=clampPt({x:r.pos.x+uy*110,y:r.pos.y-ux*110});
+  var score=function(p){var cd=Math.min.apply(0,r.corr.map(function(c){return nearest(p,c).d}));return Math.hypot(p.x-r.B.x,p.y-r.B.y)+Math.min(nearest(p,r.route).d,cd)*3};
+  var d1=score(c1)>=score(c2)?c1:c2,vx=d1.x-r.B.x,vy=d1.y-r.B.y,vl=Math.hypot(vx,vy)||1,d2=clampPt({x:d1.x+vx/vl*80,y:d1.y+vy/vl*80});
+  r.path=[{x:r.pos.x,y:r.pos.y},d1,d2];r.s=0;r.mode='bad';r.stopped=false;rideLog('Demo: vehicle leaves the route towards an unknown area.','warn')},
+ evToggle:function(){if(S.ev.on)evStop();else evStart()},
+ evOpt:function(t){var k=t.dataset.v;S.ev[k]=!S.ev[k];render()},
+ evShare:function(t){var i=+t.dataset.v,v=S.ev.vault[i];if(!v)return;
+  sheet('<h3 style="font-size:18px">Share recording</h3><p class="mut sm" style="margin:4px 0 12px">'+esc(v.ctx)+' &middot; '+v.dur+'. A time-limited, encrypted link is created. Simulated.</p><div class="col">'
+  +'<button class="radio" data-a="evShareTo" data-v="'+i+'" data-k="Shared with contacts"><span class="avatar" style="width:36px;height:36px">'+ic('users')+'</span><span><b>Emergency contacts</b><br><span class="mut sm">'+activeContacts().map(function(c){return esc(c.n)}).join(', ')+'</span></span></button>'
+  +'<button class="radio" data-a="evShareTo" data-v="'+i+'" data-k="Shared with police"><span class="avatar" style="width:36px;height:36px;background:#0B1B3F">'+ic('police')+'</span><span><b>Police</b><br><span class="mut sm">Attach to a complaint with time and location</span></span></button>'
+  +'<button class="radio" data-a="evShareTo" data-v="'+i+'" data-k="Link copied"><span class="avatar" style="width:36px;height:36px;background:var(--surface3);color:var(--ink)">'+ic('copy')+'</span><span><b>Copy secure link</b><br><span class="mut sm">Expires in 24 hours</span></span></button></div>')},
+ evShareTo:function(t){var v=S.ev.vault[+t.dataset.v];if(v)v.st=t.dataset.k;closeSheet();render();toast(t.dataset.k+' (simulated)')},
+ evDel:function(t){var i=+t.dataset.v;sheet('<h3 style="font-size:18px">Delete this recording?</h3><p class="mut sm" style="margin:6px 0 14px">It is removed from your phone and the cloud backup. This cannot be undone.</p><div class="btnrow"><button class="btn ghost" data-a="closeSheet">Keep</button><button class="btn danger" data-a="evDelYes" data-v="'+i+'">Delete</button></div>')},
+ evDelYes:function(t){S.ev.vault.splice(+t.dataset.v,1);closeSheet();render();toast('Recording deleted')}
+};
+Object.keys(A2).forEach(function(k){A[k]=A2[k]});
+
+document.addEventListener('click',function(e){var t=e.target.closest('[data-a]');if(!t)return;var f=A[t.dataset.a];if(f){audio();f(t,e)}});
+document.addEventListener('input',function(e){var k=e.target.dataset&&e.target.dataset.in;if(!k)return;var v=e.target.value;
+ if(k==='fakeName')S.fake.name=v;else if(k==='fakeRing')S.fake.ring=v;else if(k==='fakeScript')S.fake.script=v;else if(k==='bookFrom')S.book.from=v;else if(k==='bookTo')S.book.to=v;else if(k==='rvText')S.review.text=v});
+document.addEventListener('change',function(e){var k=e.target.dataset&&e.target.dataset.in;if(k==='bookFrom'||k==='bookTo')render()});
+render();
+})();
+</script>
+
+</body>
+</html>
+
+</body></html>
